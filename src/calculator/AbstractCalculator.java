@@ -1,7 +1,8 @@
 package calculator;
 
+
 public abstract class AbstractCalculator implements Calculator {
-  protected char [] validOperators = {'+', '-', '*', '='};
+  protected char[] validOperators = {'+', '-', '*', '='};
 
   protected boolean isAnOperand(char op) {
     int opVal = Character.getNumericValue(op);
@@ -29,8 +30,11 @@ public abstract class AbstractCalculator implements Calculator {
     }
   }
 
-  protected int Calculate(int num1, int num2, Character sign) throws RuntimeException {
+  protected int Calculate(int num1, int num2, Character sign) {
     long result = 0;
+    if (sign == null) {
+      return num1;
+    }
     if (sign == '+') {
       result = (long) num1 + num2;
     } else if (sign == '-') {
@@ -39,7 +43,7 @@ public abstract class AbstractCalculator implements Calculator {
       result = (long) num1 * num2;
     }
 
-    if(result > Integer.MAX_VALUE) {
+    if (result > Integer.MAX_VALUE) {
       // Overflow
       result = 0;
     }

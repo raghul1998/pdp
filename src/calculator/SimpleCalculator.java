@@ -14,6 +14,13 @@ public class SimpleCalculator extends AbstractCalculator {
     q.clear();
   }
 
+  private void optimizeQueue () {
+    q.clear();
+    for(int i=0; i<result.length(); i++) {
+      q.add(result.charAt(i));
+    }
+  }
+
   private boolean checkIfSequenceIsValid(char op) {
     if (q.isEmpty()) {
       if (isAnOperand(op)) {
@@ -41,61 +48,25 @@ public class SimpleCalculator extends AbstractCalculator {
           }
         }
       } else {
-        inputNumber += op;
         // If a number is coming in immediately after '=' without any operator, then
         // it is considered as a new calculator. Hence, clear.
         if(q.getLast() == '=') {
           clear();
         }
+        inputNumber += op;
         return true;
       }
     }
   }
 
-  @Override
-  public Calculator input(char op) throws RuntimeException {
-    // Clear the cache if the 'C' or 'c' command is provided.
-    if (op == 'C') {
-      clear();
-      return this;
-    }
-    if (!checkIfInputIsValid(op)) {
-      String exception = String.format("Invalid character %c entered.", op);
-      throw new IllegalArgumentException(exception);
-    } else {
-      if (!checkIfSequenceIsValid(op)) {
-        String exception = "Invalid sequence";
-        throw new IllegalArgumentException(exception);
-      } else {
-        if(inputNumber.length() > 0) {
-          long val = Long.parseLong(inputNumber);
-          if(val > Integer.MAX_VALUE) {
-            throw new RuntimeException("The entered value is causing overflow");
-          }
-        }
-        q.add(op);
-      }
-    }
-    return this;
-  }
-
-  private int convertStringToInt (String number) {
-    long result = Long.parseLong(number);
-    if(result > Integer.MAX_VALUE) {
-      throw new RuntimeException("The entered value is causing overflow");
-    }
-    return (int) result;
-  }
-
-  @Override
-  public String getResult() {
+  private void performCalculation() {
     int val1 = 0;
     int val2 = 0;
     Character sign = null;
     StringBuilder number = new StringBuilder();
     result = "";
     if (q.isEmpty()) {
-      return result;
+      result = "";
     } else {
       for (Character ch : q) {
         if (isAnOperand(ch)) {
@@ -131,42 +102,59 @@ public class SimpleCalculator extends AbstractCalculator {
         }
       }
     }
+    //optimizeQueue();
+  }
+
+  @Override
+  public Calculator input(char op) throws IllegalArgumentException {
+    // Clear the cache if the 'C' or 'c' command is provided.
+    if (op == 'C') {
+      clear();
+      return this;
+    }
+    if (!checkIfInputIsValid(op)) {
+      String exception = String.format("Invalid character %c entered.", op);
+      throw new IllegalArgumentException(exception);
+    } else {
+      if (!checkIfSequenceIsValid(op)) {
+        String exception = "Invalid sequence";
+        throw new IllegalArgumentException(exception);
+      } else {
+        if(inputNumber.length() > 0) {
+          long val = Long.parseLong(inputNumber);
+          if(val > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("The entered value is causing overflow");
+          }
+        }
+        q.add(op);
+      }
+    }
+    performCalculation();
+    return this;
+  }
+
+  private int convertStringToInt (String number) {
+    long result = Long.parseLong(number);
+    if(result > Integer.MAX_VALUE) {
+      throw new RuntimeException("The entered value is causing overflow");
+    }
+    return (int) result;
+  }
+
+  @Override
+  public String getResult() throws RuntimeException {
     return result;
   }
 
   public static void main(String[] args) {
     Calculator obj = new SimpleCalculator();
-    System.out.println(obj.getResult());
     obj.input('2');
-    System.out.println(obj.getResult());
-    obj.input('1');
-    System.out.println(obj.getResult());
-    obj.input('4');
-    System.out.println(obj.getResult());
-    obj.input('7');
-    System.out.println(obj.getResult());
-    obj.input('4');
-    System.out.println(obj.getResult());
-    obj.input('8');
-    System.out.println(obj.getResult());
-    obj.input('3');
-    System.out.println(obj.getResult());
-    obj.input('6');
-    System.out.println(obj.getResult());
-    obj.input('4');
-    System.out.println(obj.getResult());
-    obj.input('7');
-    System.out.println(obj.getResult());
-    obj.input('+');
-    System.out.println(obj.getResult());
-    obj.input('1');
     System.out.println(obj.getResult());
     obj.input('=');
     System.out.println(obj.getResult());
-    obj.input('+');
+    obj.input('=');
     System.out.println(obj.getResult());
-    obj.input('1');
+    obj.input('=');
     System.out.println(obj.getResult());
-
   }
 }

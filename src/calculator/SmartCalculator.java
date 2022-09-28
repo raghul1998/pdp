@@ -40,57 +40,27 @@ public class SmartCalculator extends AbstractCalculator {
           q.removeLast();
         }
       } else {
-        inputNumber += op;
         // If a number is coming in immediately after '=' without any operator, then
         // it is considered as a new calculator. Hence, clear.
         if (q.getLast() == '=') {
           clear();
         }
+        inputNumber += op;
       }
       return true;
     }
   }
 
-  @Override
-  public Calculator input(char op) throws RuntimeException {
-    // Clear the cache if the 'C' or 'c' command is provided.
-    if (op == 'C') {
-      clear();
-      return this;
-    }
-    if (!checkIfInputIsValid(op)) {
-      String exception = String.format("Invalid character %c entered.", op);
-      throw new IllegalArgumentException(exception);
-    } else {
-      if (!checkIfSequenceIsValid(op)) {
-        String exception = "Invalid sequence";
-        throw new IllegalArgumentException(exception);
-      } else {
-        if (inputNumber.length() > 0) {
-          long val = Long.parseLong(inputNumber);
-          if (val > Integer.MAX_VALUE) {
-            throw new RuntimeException("The entered value is causing overflow");
-          }
-        }
-        if (!blockInput) {
-          // Take input only if flag is not set even-though input is valid.
-          q.add(op);
-        }
-      }
-    }
-    return this;
-  }
-
-  @Override
-  public String getResult() {
+  private void performCalculation() {
     int val1 = 0;
     int val2 = 0;
     Character sign = null;
     Character lastValidOperation = null;
+    Character lastKnownQueueValue = null;
     StringBuilder number = new StringBuilder();
     result = "";
     if (q.isEmpty()) {
-      return result;
+      result = "";
     } else {
       for (Character ch : q) {
         if (isAnOperand(ch)) {
@@ -108,9 +78,18 @@ public class SmartCalculator extends AbstractCalculator {
           } else {
             if (sign == '=' && ch != '=') {
               sign = ch;
-            }
-            else if (sign == '=' && ch == '=') {
+            } else if (sign == '=' && ch == '=') {
+              // 3+2=== case
               val1 = Calculate(val1, val2, lastValidOperation);
+              sign = ch;
+              result = String.valueOf(val1);
+            } else if ((lastKnownQueueValue == '+'
+                    || lastKnownQueueValue == '-'
+                    || lastKnownQueueValue == '*') && ch == '=') {
+              // 32+2=+= case
+              val2 = val1;
+              val1 = Calculate(val1, val1, lastKnownQueueValue);
+              lastValidOperation = sign;
               sign = ch;
               result = String.valueOf(val1);
             } else {
@@ -127,61 +106,60 @@ public class SmartCalculator extends AbstractCalculator {
             number.setLength(0);
           }
         }
+        lastKnownQueueValue = ch;
       }
     }
+  }
+
+  @Override
+  public Calculator input(char op) throws IllegalArgumentException {
+    // Clear the cache if the 'C' or 'c' command is provided.
+    if (op == 'C') {
+      clear();
+      return this;
+    }
+    if (!checkIfInputIsValid(op)) {
+      String exception = String.format("Invalid character %c entered.", op);
+      throw new IllegalArgumentException(exception);
+    } else {
+      if (!checkIfSequenceIsValid(op)) {
+        String exception = "Invalid sequence";
+        throw new IllegalArgumentException(exception);
+      } else {
+        if (inputNumber.length() > 0) {
+          long val = Long.parseLong(inputNumber);
+          if (val > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("The entered value is causing overflow");
+          }
+        }
+        if (!blockInput) {
+          // Take input only if flag is not set even-though input is valid.
+          q.add(op);
+        }
+      }
+    }
+    performCalculation();
+    return this;
+  }
+
+  @Override
+  public String getResult() {
     return result;
   }
 
   public static void main(String[] args) {
     Calculator obj = new SmartCalculator();
     System.out.println(obj.getResult());
-    obj.input('+');
-    System.out.println(obj.getResult());
-    obj.input('+');
-    System.out.println(obj.getResult());
-    obj.input('+');
-    System.out.println(obj.getResult());
     obj.input('3');
     System.out.println(obj.getResult());
     obj.input('2');
     System.out.println(obj.getResult());
-    obj.input('+');
-    System.out.println(obj.getResult());
-    obj.input('-');
-    System.out.println(obj.getResult());
-    obj.input('3');
-    System.out.println(obj.getResult());
     obj.input('=');
     System.out.println(obj.getResult());
     obj.input('=');
     System.out.println(obj.getResult());
     obj.input('=');
     System.out.println(obj.getResult());
-    obj.input('2');
-    System.out.println(obj.getResult());
-    obj.input('+');
-    System.out.println(obj.getResult());
-    obj.input('3');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('*');
-    System.out.println(obj.getResult());
-    obj.input('2');
-    System.out.println(obj.getResult());
-    obj.input('*');
-    System.out.println(obj.getResult());
-    obj.input('2');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
+
   }
 }
