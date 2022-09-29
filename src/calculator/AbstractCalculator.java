@@ -43,7 +43,7 @@ public abstract class AbstractCalculator implements Calculator {
       result = (long) num1 * num2;
     }
 
-    if (result > Integer.MAX_VALUE) {
+    if (result > Integer.MAX_VALUE || result < -Integer.MAX_VALUE) {
       // Overflow
       result = 0;
     }

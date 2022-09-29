@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Random;
+
 import calculator.Calculator;
 
 import static org.junit.Assert.*;
@@ -936,5 +938,62 @@ public abstract class AbstractCalculatorTest {
     assertEquals("0-2", calc.getResult());
     calc.input('+');
     assertEquals("-2+", calc.getResult());
+  }
+
+  /**
+   * A JUnit test that performs fuzzy testing.
+   */
+  @Test
+  public void testFuzzyInput() {
+    Random random = new Random();
+    random.setSeed(12345L);
+
+    Character previousSign = null;
+    Calculator calc = calcObj();
+    assertEquals("", calc.getResult());
+    Character array[] = {'+', '-', '*', '='};
+    long resultVal = 3;
+    String resultString = "";
+
+    calc.input('1');
+    calc.input('+');
+    calc.input('2');
+    calc.input('+');
+    assertEquals("3+", calc.getResult());
+
+    for (int i = 0; i < 10000; i++) {
+      Character randValue = Character.forDigit(random.nextInt(9), 10);
+      if (randValue == '0') {
+        continue;
+      }
+      int sign = random.nextInt(3);
+      calc.input(randValue);
+      calc.input(array[sign]);
+
+      if (previousSign == null) {
+        resultVal = Character.getNumericValue(randValue)+3;
+      }
+      else {
+        if (previousSign == '+') {
+          resultVal += Character.getNumericValue(randValue);
+        } else if (previousSign == '-') {
+          resultVal -= Character.getNumericValue(randValue);
+        } else if (previousSign == '*') {
+          resultVal *= Character.getNumericValue(randValue);
+        }
+        if(resultVal > Integer.MAX_VALUE || resultVal < -Integer.MAX_VALUE) {
+          resultVal = 0;
+        }
+      }
+
+      if(array[sign] != '=') {
+        resultString = String.format("%s%s", resultVal, array[sign]);
+      }
+      else {
+        resultString = String.format("%s", resultVal);
+      }
+      assertEquals(resultString, calc.getResult());
+      previousSign = array[sign];
+    }
   }
 }
