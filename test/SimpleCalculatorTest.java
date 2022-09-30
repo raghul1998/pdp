@@ -7,16 +7,19 @@ import calculator.SimpleCalculator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+/**
+ * A JUnit test class for the Simple Calculator class. This class also extends the Abstract
+ * Calculator class.
+ */
 public class SimpleCalculatorTest extends AbstractCalculatorTest {
-  private Calculator simpleCalc;
-
+  /**
+   * A method that returns the simple calculator object. This is a helper function for the factory
+   * method.
+   *
+   * @return Returns simple calculator object
+   */
   protected Calculator calcObj() {
     return new SimpleCalculator();
-  }
-
-  @Before
-  public void setup() {
-    simpleCalc = calcObj();
   }
 
   /**

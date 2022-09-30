@@ -6,6 +6,15 @@ import calculator.Calculator;
 
 import static org.junit.Assert.*;
 
+/**
+ * This class is an abstract class for all the other calculator test classes.
+ * This class has the following variables.
+ * <ul>
+ *   <li>
+ *     calcObj - calculator object
+ *   </li>
+ * </ul>
+ */
 public abstract class AbstractCalculatorTest {
   protected abstract Calculator calcObj();
 
@@ -971,9 +980,8 @@ public abstract class AbstractCalculatorTest {
       calc.input(array[sign]);
 
       if (previousSign == null) {
-        resultVal = Character.getNumericValue(randValue)+3;
-      }
-      else {
+        resultVal = Character.getNumericValue(randValue) + 3;
+      } else {
         if (previousSign == '+') {
           resultVal += Character.getNumericValue(randValue);
         } else if (previousSign == '-') {
@@ -981,15 +989,14 @@ public abstract class AbstractCalculatorTest {
         } else if (previousSign == '*') {
           resultVal *= Character.getNumericValue(randValue);
         }
-        if(resultVal > Integer.MAX_VALUE || resultVal < -Integer.MAX_VALUE) {
+        if (resultVal > Integer.MAX_VALUE || resultVal < -Integer.MAX_VALUE) {
           resultVal = 0;
         }
       }
 
-      if(array[sign] != '=') {
+      if (array[sign] != '=') {
         resultString = String.format("%s%s", resultVal, array[sign]);
-      }
-      else {
+      } else {
         resultString = String.format("%s", resultVal);
       }
       assertEquals(resultString, calc.getResult());

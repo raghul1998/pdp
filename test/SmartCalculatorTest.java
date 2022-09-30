@@ -6,16 +6,19 @@ import calculator.SmartCalculator;
 
 import static org.junit.Assert.*;
 
+/**
+ * A JUnit test class for the Smart Calculator class. This class also extends the Abstract
+ * Calculator class.
+ */
 public class SmartCalculatorTest extends AbstractCalculatorTest {
-  private Calculator smartCalc;
-
+  /**
+   * A method that returns the smart calculator object. This is a helper function for the factory
+   * method.
+   *
+   * @return Returns smart calculator object
+   */
   protected Calculator calcObj() {
     return new SmartCalculator();
-  }
-
-  @Before
-  public void setup() {
-    smartCalc = calcObj();
   }
 
   /**

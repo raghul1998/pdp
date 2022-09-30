@@ -3,21 +3,64 @@ package calculator;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * This class represents a Smart Calculator. This class also extends the Abstract Calculator class.
+ * This class has the following variable.
+ * <ul>
+ *   <li>
+ *     queue - a queue that holds the inputs
+ *     result - holds the value of the result as a string
+ *     inputNumber - a variable to hold a single operand that was entered
+ *     isLastSignAnEquals - this boolean variable helps to track the equals operator
+ *     lastValidOperation - this variable keeps track of the last operation that was performed
+ *     lastVal2 - the second operand that was entered needs to be stored for special cases in the
+ *                smart calculator. This variable helps to keep track of that
+ *   </li>
+ * </ul>
+ */
 public class SmartCalculator extends AbstractCalculator {
-  private Deque<Character> q = new LinkedList<>();
+  private Deque<Character> queue = new LinkedList<>();
   private String result = "";
   private String inputNumber = "";
   private boolean blockInput = false;
+  private boolean isLastSignAnEquals = false;
+  private Character lastValidOperation = null;
+  private int lastVal2 = 0;
 
+  /**
+   * This method is a helper function has clears the state of the calculator by clearing certain
+   * variables and the queue.
+   */
   private void clear() {
     result = "";
     inputNumber = "";
-    q.clear();
+    queue.clear();
+    lastValidOperation = null;
   }
 
+  /**
+   * This methold is a helper function that helps in optimizing the queue as soon as an operation
+   * is performed. This helps reduce the overhead of storing all the previous input values.
+   */
+  private void optimizeQueue() {
+    queue.clear();
+    for (int i = 0; i < result.length(); i++) {
+      queue.add(result.charAt(i));
+    }
+    if (isLastSignAnEquals) {
+      queue.add('=');
+    }
+  }
+
+  /**
+   * The calculator has certain rules which enforces certain sequence. This method checks if the
+   * sequence is valid and as per rule.
+   * @param op Input value entered by the user
+   * @return Returns true if the sequence is valid, else returns false
+   */
   private boolean checkIfSequenceIsValid(char op) {
     blockInput = false;
-    if (q.isEmpty()) {
+    if (queue.isEmpty()) {
       if (isAnOperand(op)) {
         inputNumber += op;
         return true;
@@ -34,15 +77,15 @@ public class SmartCalculator extends AbstractCalculator {
         // Clear the last input if we see an operator
         inputNumber = "";
         // Check if the last element entered is an operator and override operations accordingly.
-        if ((q.getLast() == '+' || q.getLast() == '-' || q.getLast() == '*') && (op != '=')) {
+        if ((queue.getLast() == '+' || queue.getLast() == '-' || queue.getLast() == '*') && (op != '=')) {
           // If the last operation is one of the above, remove it and replace it with new operator.
           // Given that the incoming operator is not an '='
-          q.removeLast();
+          queue.removeLast();
         }
       } else {
         // If a number is coming in immediately after '=' without any operator, then
         // it is considered as a new calculator. Hence, clear.
-        if (q.getLast() == '=') {
+        if (queue.getLast() == '=') {
           clear();
         }
         inputNumber += op;
@@ -51,64 +94,88 @@ public class SmartCalculator extends AbstractCalculator {
     }
   }
 
+  /**
+   * This is a helper method that performs the calculation. It goes through the queue, analysis
+   * what operation to be performed and performs them accordingly and also stores the result as
+   * string in the global variable.
+   */
   private void performCalculation() {
     int val1 = 0;
     int val2 = 0;
     Character sign = null;
-    Character lastValidOperation = null;
     Character lastKnownQueueValue = null;
     StringBuilder number = new StringBuilder();
     result = "";
-    if (q.isEmpty()) {
+    isLastSignAnEquals = false;
+    boolean isFirstQueueASign = false;
+
+    if (queue.isEmpty()) {
       result = "";
     } else {
-      for (Character ch : q) {
-        if (isAnOperand(ch)) {
-          number.append(ch);
-          result += ch;
+      if (queue.peek() == '-') {
+        isFirstQueueASign = true;
+        result += '-';
+        queue.removeFirst();
+      }
+      for (Character qVar : queue) {
+        isLastSignAnEquals = false;
+        if (isAnOperand(qVar)) {
+          number.append(qVar);
+          result += qVar;
         } else {
           if (sign == null) {
             val1 = Integer.parseInt(String.valueOf(number));
+            if (isFirstQueueASign) {
+              val1 = val1 * -1;
+              isFirstQueueASign = false;
+            }
             //val1 = convertStringToInt(String.valueOf(number));
-            sign = ch;
+            sign = qVar;
             number.setLength(0);
-            if (ch != '=') {
-              result += ch;
+            if (qVar != '=') {
+              result += qVar;
+            } else {
+              isLastSignAnEquals = true;
             }
           } else {
-            if (sign == '=' && ch != '=') {
-              sign = ch;
-            } else if (sign == '=' && ch == '=') {
+            if (sign == '=' && qVar != '=') {
+              sign = qVar;
+            } else if (sign == '=' && qVar == '=') {
               // 3+2=== case
-              val1 = Calculate(val1, val2, lastValidOperation);
-              sign = ch;
+              val1 = Calculate(val1, lastVal2, lastValidOperation);
+              sign = qVar;
               result = String.valueOf(val1);
             } else if ((lastKnownQueueValue == '+'
                     || lastKnownQueueValue == '-'
-                    || lastKnownQueueValue == '*') && ch == '=') {
+                    || lastKnownQueueValue == '*') && qVar == '=') {
               // 32+2=+= case
               val2 = val1;
+              lastVal2 = val2;
               val1 = Calculate(val1, val1, lastKnownQueueValue);
               lastValidOperation = sign;
-              sign = ch;
+              sign = qVar;
               result = String.valueOf(val1);
             } else {
               val2 = Integer.parseInt(String.valueOf(number));
+              lastVal2 = val2;
               //val2 = convertStringToInt(String.valueOf(number));
               val1 = Calculate(val1, val2, sign);
               lastValidOperation = sign;
-              sign = ch;
+              sign = qVar;
               result = String.valueOf(val1);
             }
-            if (ch != '=') {
-              result += ch;
+            if (qVar != '=') {
+              result += qVar;
+            } else {
+              isLastSignAnEquals = true;
             }
             number.setLength(0);
           }
         }
-        lastKnownQueueValue = ch;
+        lastKnownQueueValue = qVar;
       }
     }
+    optimizeQueue();
   }
 
   @Override
@@ -134,7 +201,7 @@ public class SmartCalculator extends AbstractCalculator {
         }
         if (!blockInput) {
           // Take input only if flag is not set even-though input is valid.
-          q.add(op);
+          queue.add(op);
         }
       }
     }
@@ -147,19 +214,4 @@ public class SmartCalculator extends AbstractCalculator {
     return result;
   }
 
-  public static void main(String[] args) {
-    Calculator obj = new SmartCalculator();
-    System.out.println(obj.getResult());
-    obj.input('3');
-    System.out.println(obj.getResult());
-    obj.input('2');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-    obj.input('=');
-    System.out.println(obj.getResult());
-
-  }
 }
