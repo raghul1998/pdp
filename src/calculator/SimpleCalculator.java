@@ -4,51 +4,14 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * This class represents a Simple Calculator. This class also extends the Abstract Calculator class.
- * This class has the following variable.
- * <ul>
- *   <li>
- *     queue - a queue that holds the inputs
- *     result - holds the value of the result as a string
- *     inputNumber - a variable to hold a single operand that was entered
- *     isLastSignAnEquals - this boolean variable helps to track the equals operator
- *   </li>
- * </ul>
+ * This class represents a Simple Calculator.
+ * This class also extends the Abstract Calculator class.
  */
 public class SimpleCalculator extends AbstractCalculator {
-  private Deque<Character> queue = new LinkedList<>();
-  private String result = "";
-  private String inputNumber = "";
-
-  private boolean isLastSignAnEquals = false;
-
-  /**
-   * This method is a helper function has clears the state of the calculator by clearing certain
-   * variables and the queue.
-   */
-  private void clear() {
-    result = "";
-    inputNumber = "";
-    queue.clear();
-  }
-
-  /**
-   * This methold is a helper function that helps in optimizing the queue as soon as an operation
-   * is performed. This helps reduce the overhead of storing all the previous input values.
-   */
-  private void optimizeQueue() {
-    queue.clear();
-    for (int i = 0; i < result.length(); i++) {
-      queue.add(result.charAt(i));
-    }
-    if (isLastSignAnEquals) {
-      queue.add('=');
-    }
-  }
-
   /**
    * The calculator has certain rules which enforces certain sequence. This method checks if the
    * sequence is valid and as per rule.
+   *
    * @param op Input value entered by the user
    * @return Returns true if the sequence is valid, else returns false
    */
@@ -186,11 +149,6 @@ public class SimpleCalculator extends AbstractCalculator {
     }
     performCalculation();
     return this;
-  }
-
-  @Override
-  public String getResult() {
-    return result;
   }
 
 }

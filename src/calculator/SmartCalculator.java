@@ -1,29 +1,24 @@
 package calculator;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
  * This class represents a Smart Calculator. This class also extends the Abstract Calculator class.
  * This class has the following variable.
  * <ul>
  *   <li>
- *     queue - a queue that holds the inputs
- *     result - holds the value of the result as a string
- *     inputNumber - a variable to hold a single operand that was entered
- *     isLastSignAnEquals - this boolean variable helps to track the equals operator
- *     lastValidOperation - this variable keeps track of the last operation that was performed
- *     lastVal2 - the second operand that was entered needs to be stored for special cases in the
- *                smart calculator. This variable helps to keep track of that
+ *     lastValidOperation - This variable keeps track of the last operation that was performed.
+ *   </li>
+ *   <li>
+ *     lastVal2 - The second operand that was entered needs to be stored for special cases in the
+ *     smart calculator. This variable helps to keep track of that.
+ *   </li>
+ *   <li>
+ *     blockInput - certain inputs need not be pushed to the queue. This variable helps in keeping
+ *     track of that.
  *   </li>
  * </ul>
  */
 public class SmartCalculator extends AbstractCalculator {
-  private Deque<Character> queue = new LinkedList<>();
-  private String result = "";
-  private String inputNumber = "";
   private boolean blockInput = false;
-  private boolean isLastSignAnEquals = false;
   private Character lastValidOperation = null;
   private int lastVal2 = 0;
 
@@ -31,30 +26,15 @@ public class SmartCalculator extends AbstractCalculator {
    * This method is a helper function has clears the state of the calculator by clearing certain
    * variables and the queue.
    */
-  private void clear() {
-    result = "";
-    inputNumber = "";
-    queue.clear();
+  protected void clearSmart() {
+    clear();
     lastValidOperation = null;
-  }
-
-  /**
-   * This methold is a helper function that helps in optimizing the queue as soon as an operation
-   * is performed. This helps reduce the overhead of storing all the previous input values.
-   */
-  private void optimizeQueue() {
-    queue.clear();
-    for (int i = 0; i < result.length(); i++) {
-      queue.add(result.charAt(i));
-    }
-    if (isLastSignAnEquals) {
-      queue.add('=');
-    }
   }
 
   /**
    * The calculator has certain rules which enforces certain sequence. This method checks if the
    * sequence is valid and as per rule.
+   *
    * @param op Input value entered by the user
    * @return Returns true if the sequence is valid, else returns false
    */
@@ -86,7 +66,7 @@ public class SmartCalculator extends AbstractCalculator {
         // If a number is coming in immediately after '=' without any operator, then
         // it is considered as a new calculator. Hence, clear.
         if (queue.getLast() == '=') {
-          clear();
+          clearSmart();
         }
         inputNumber += op;
       }
@@ -182,7 +162,7 @@ public class SmartCalculator extends AbstractCalculator {
   public Calculator input(char op) throws IllegalArgumentException {
     // Clear the cache if the 'C' or 'c' command is provided.
     if (op == 'C') {
-      clear();
+      clearSmart();
       return this;
     }
     if (!checkIfInputIsValid(op)) {
@@ -207,11 +187,6 @@ public class SmartCalculator extends AbstractCalculator {
     }
     performCalculation();
     return this;
-  }
-
-  @Override
-  public String getResult() {
-    return result;
   }
 
 }
