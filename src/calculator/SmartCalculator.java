@@ -11,10 +11,6 @@ package calculator;
  *     lastVal2 - The second operand that was entered needs to be stored for special cases in the
  *     smart calculator. This variable helps to keep track of that.
  *   </li>
- *   <li>
- *     blockInput - certain inputs need not be pushed to the queue. This variable helps in keeping
- *     track of that.
- *   </li>
  * </ul>
  */
 public class SmartCalculator extends AbstractCalculator {
@@ -45,88 +41,40 @@ public class SmartCalculator extends AbstractCalculator {
     return true;
   }
 
-  /**
-   * This is a helper method that performs the calculation. It goes through the queue, analysis
-   * what operation to be performed and performs them accordingly and also stores the result as
-   * string in the global variable.
-   */
-  protected void performCalculation() {
-    int val1 = 0;
-    int val2;
-    Character sign = null;
-    Character lastKnownQueueValue = null;
-    StringBuilder number = new StringBuilder();
-    result = "";
-    isLastSignAnEquals = false;
-    boolean isFirstQueueASign = false;
-
-    if (queue.isEmpty()) {
-      result = "";
+  @Override
+  protected void performCalculatorElsePart(Character qVar) {
+    if (sign == '=' && qVar != '=') {
+      sign = qVar;
+    } else if (sign == '=') {
+      // 3+2=== case
+      val1 = calculate(val1, lastVal2, lastValidOperation);
+      sign = qVar;
+      result = String.valueOf(val1);
+    } else if ((lastKnownQueueValue == '+'
+            || lastKnownQueueValue == '-'
+            || lastKnownQueueValue == '*') && qVar == '=') {
+      // 32+2=+= case
+      val2 = val1;
+      lastVal2 = val2;
+      val1 = calculate(val1, val1, lastKnownQueueValue);
+      lastValidOperation = sign;
+      sign = qVar;
+      result = String.valueOf(val1);
     } else {
-      if (queue.peek() == '-') {
-        isFirstQueueASign = true;
-        result += '-';
-        queue.removeFirst();
-      }
-      for (Character qVar : queue) {
-        isLastSignAnEquals = false;
-        if (isAnOperand(qVar)) {
-          number.append(qVar);
-          result += qVar;
-        } else {
-          if (sign == null) {
-            val1 = Integer.parseInt(String.valueOf(number));
-            if (isFirstQueueASign) {
-              val1 = val1 * -1;
-              isFirstQueueASign = false;
-            }
-            //val1 = convertStringToInt(String.valueOf(number));
-            sign = qVar;
-            number.setLength(0);
-            if (qVar != '=') {
-              result += qVar;
-            } else {
-              isLastSignAnEquals = true;
-            }
-          } else {
-            if (sign == '=' && qVar != '=') {
-              sign = qVar;
-            } else if (sign == '=') {
-              // 3+2=== case
-              val1 = calculate(val1, lastVal2, lastValidOperation);
-              sign = qVar;
-              result = String.valueOf(val1);
-            } else if ((lastKnownQueueValue == '+'
-                    || lastKnownQueueValue == '-'
-                    || lastKnownQueueValue == '*') && qVar == '=') {
-              // 32+2=+= case
-              val2 = val1;
-              lastVal2 = val2;
-              val1 = calculate(val1, val1, lastKnownQueueValue);
-              lastValidOperation = sign;
-              sign = qVar;
-              result = String.valueOf(val1);
-            } else {
-              val2 = Integer.parseInt(String.valueOf(number));
-              lastVal2 = val2;
-              //val2 = convertStringToInt(String.valueOf(number));
-              val1 = calculate(val1, val2, sign);
-              lastValidOperation = sign;
-              sign = qVar;
-              result = String.valueOf(val1);
-            }
-            if (qVar != '=') {
-              result += qVar;
-            } else {
-              isLastSignAnEquals = true;
-            }
-            number.setLength(0);
-          }
-        }
-        lastKnownQueueValue = qVar;
-      }
+      val2 = Integer.parseInt(String.valueOf(number));
+      lastVal2 = val2;
+      //val2 = convertStringToInt(String.valueOf(number));
+      val1 = calculate(val1, val2, sign);
+      lastValidOperation = sign;
+      sign = qVar;
+      result = String.valueOf(val1);
     }
-    optimizeQueue();
+    if (qVar != '=') {
+      result += qVar;
+    } else {
+      isLastSignAnEquals = true;
+    }
+    number.setLength(0);
   }
 
 }

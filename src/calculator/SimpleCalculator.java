@@ -31,4 +31,22 @@ public class SimpleCalculator extends AbstractCalculator {
       return true;
     }
   }
+
+  @Override
+  protected void performCalculatorElsePart(Character qVar) {
+    if (sign == '=') {
+      sign = qVar;
+    } else {
+      val2 = Integer.parseInt(String.valueOf(number));
+      val1 = calculate(val1, val2, sign);
+      sign = qVar;
+      result = String.valueOf(val1);
+    }
+    if (qVar != '=') {
+      result += qVar;
+    } else {
+      isLastSignAnEquals = true;
+    }
+    number.setLength(0);
+  }
 }

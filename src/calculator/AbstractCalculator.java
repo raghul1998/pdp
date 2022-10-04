@@ -13,6 +13,18 @@ import java.util.LinkedList;
  *   <li> result - holds the value of the result as a string </li>
  *   <li> inputNumber - a variable to hold a single operand that was entered </li>
  *   <li> isLastSignAnEquals - this boolean variable helps to track the equals operator </li>
+ *   <li>
+ *     blockInput - certain inputs need not be pushed to the queue. This variable helps in keeping
+ *     track of that.
+ *  </li>
+ *   <li> val1 - holds operand 1 value </li>
+ *   <li> val2 - holds operand 2 value </li>
+ *   <li> sign - denotes the input operator sign </li>
+ *   <li> number - a string builder to hold the string format of the operands </li>
+ *   <li>
+ *     isFirstQueueASign - a boolean to identify if first element in the queue is an operator
+ *   </li>
+ *   <li> lastKnownQueueValue - a variable that keeps track of last known element in the queue </li>
  * </ul>
  */
 public abstract class AbstractCalculator implements Calculator {
@@ -22,8 +34,13 @@ public abstract class AbstractCalculator implements Calculator {
   protected String result = "";
   protected String inputNumber = "";
   protected boolean isLastSignAnEquals = false;
-
   protected boolean blockInput = false;
+  protected int val1 = 0;
+  protected int val2 = 0;
+  protected Character sign = null;
+  protected StringBuilder number = new StringBuilder();
+  protected boolean isFirstQueueASign = false;
+  protected Character lastKnownQueueValue = null;
 
   /**
    * This method checks if the value passed is an operand or not. Meaning it returns true if the
@@ -150,6 +167,13 @@ public abstract class AbstractCalculator implements Calculator {
     }
   }
 
+  /**
+   * An abstract function that is override in its respective classes. Each class have their
+   * customized version of checking the sequence.
+   *
+   * @param op operator that was inputted
+   * @return returns where the sequence is valid or not in boolean format
+   */
   protected abstract boolean checkSequenceElsePart(char op);
 
   /**
@@ -158,13 +182,13 @@ public abstract class AbstractCalculator implements Calculator {
    * string in the global variable.
    */
   protected void performCalculation() {
-    int val1 = 0;
-    int val2;
-    Character sign = null;
-    StringBuilder number = new StringBuilder();
+    val1 = 0;
+    sign = null;
+    number = new StringBuilder();
     result = "";
     isLastSignAnEquals = false;
-    boolean isFirstQueueASign = false;
+    isFirstQueueASign = false;
+    lastKnownQueueValue = null;
 
     if (queue.isEmpty()) {
       result = "";
@@ -194,26 +218,22 @@ public abstract class AbstractCalculator implements Calculator {
               isLastSignAnEquals = true;
             }
           } else {
-            if (sign == '=') {
-              sign = qVar;
-            } else {
-              val2 = Integer.parseInt(String.valueOf(number));
-              val1 = calculate(val1, val2, sign);
-              sign = qVar;
-              result = String.valueOf(val1);
-            }
-            if (qVar != '=') {
-              result += qVar;
-            } else {
-              isLastSignAnEquals = true;
-            }
-            number.setLength(0);
+            performCalculatorElsePart(qVar);
           }
         }
+        lastKnownQueueValue = qVar;
       }
     }
     optimizeQueue();
   }
+
+  /**
+   * An abstract function that is override in its respective classes. Each class have their
+   * customized version of performing the calculation.
+   *
+   * @param qVar Element iterated from the queue
+   */
+  protected abstract void performCalculatorElsePart(Character qVar);
 
   @Override
   public Calculator input(char op) throws IllegalArgumentException {
@@ -236,8 +256,8 @@ public abstract class AbstractCalculator implements Calculator {
             throw new IllegalArgumentException("The entered value is causing overflow");
           }
         }
-        if(this instanceof SmartCalculator) {
-          if(!blockInput) {
+        if (this instanceof SmartCalculator) {
+          if (!blockInput) {
             queue.add(op);
           }
         } else {
