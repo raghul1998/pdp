@@ -63,7 +63,6 @@ public class SmartCalculator extends AbstractCalculator {
     } else {
       val2 = Integer.parseInt(String.valueOf(number));
       lastVal2 = val2;
-      //val2 = convertStringToInt(String.valueOf(number));
       val1 = calculate(val1, val2, sign);
       lastValidOperation = sign;
       sign = qVar;
