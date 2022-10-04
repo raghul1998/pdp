@@ -1,4 +1,3 @@
-import org.junit.Before;
 import org.junit.Test;
 
 import calculator.Calculator;
@@ -23,7 +22,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the '+' operator at the beginning throws exception.
+   * JUnit test to verify if the '+' operator at the beginning throws' exception.
    */
   @Test
   public void testAddOperatorInputAtBeginning() {
@@ -50,7 +49,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b++
    */
   @Test
@@ -101,7 +100,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b+-
    */
   @Test
@@ -152,7 +151,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b+*
    */
   @Test
@@ -203,7 +202,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b-+
    */
   @Test
@@ -254,7 +253,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b--
    */
   @Test
@@ -305,7 +304,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b-*
    */
   @Test
@@ -356,7 +355,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b*+
    */
   @Test
@@ -407,7 +406,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b*-
    */
   @Test
@@ -458,7 +457,7 @@ public class SimpleCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * JUnit test to verify if the invalid sequence for simple calculator
+   * JUnit test to verify if the invalid sequence for simple calculator.
    * Case: a+b**
    */
   @Test

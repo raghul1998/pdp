@@ -32,11 +32,7 @@ public abstract class AbstractCalculator implements Calculator {
    */
   protected boolean isAnOperand(char op) {
     int opVal = Character.getNumericValue(op);
-    if (opVal >= 0 && opVal <= 9) {
-      return true;
-    } else {
-      return false;
-    }
+    return opVal >= 0 && opVal <= 9;
   }
 
   /**
@@ -62,11 +58,7 @@ public abstract class AbstractCalculator implements Calculator {
    * @return Returns true if the input value is valid, else returns false
    */
   protected boolean checkIfInputIsValid(char op) {
-    if (isAnOperand(op) || isAnOperator(op)) {
-      return true;
-    } else {
-      return false;
-    }
+    return isAnOperand(op) || isAnOperator(op);
   }
 
   /**
@@ -78,7 +70,7 @@ public abstract class AbstractCalculator implements Calculator {
    * @param sign The operation that needs to be performed
    * @return Returns the result of the operation
    */
-  protected int Calculate(int num1, int num2, Character sign) {
+  protected int calculate(int num1, int num2, Character sign) {
     long result = 0;
     if (sign == null) {
       return num1;

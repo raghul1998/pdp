@@ -57,7 +57,8 @@ public class SmartCalculator extends AbstractCalculator {
         // Clear the last input if we see an operator
         inputNumber = "";
         // Check if the last element entered is an operator and override operations accordingly.
-        if ((queue.getLast() == '+' || queue.getLast() == '-' || queue.getLast() == '*') && (op != '=')) {
+        if ((queue.getLast() == '+' || queue.getLast() == '-' || queue.getLast() == '*')
+                && (op != '=')) {
           // If the last operation is one of the above, remove it and replace it with new operator.
           // Given that the incoming operator is not an '='
           queue.removeLast();
@@ -81,7 +82,7 @@ public class SmartCalculator extends AbstractCalculator {
    */
   private void performCalculation() {
     int val1 = 0;
-    int val2 = 0;
+    int val2;
     Character sign = null;
     Character lastKnownQueueValue = null;
     StringBuilder number = new StringBuilder();
@@ -120,9 +121,9 @@ public class SmartCalculator extends AbstractCalculator {
           } else {
             if (sign == '=' && qVar != '=') {
               sign = qVar;
-            } else if (sign == '=' && qVar == '=') {
+            } else if (sign == '=') {
               // 3+2=== case
-              val1 = Calculate(val1, lastVal2, lastValidOperation);
+              val1 = calculate(val1, lastVal2, lastValidOperation);
               sign = qVar;
               result = String.valueOf(val1);
             } else if ((lastKnownQueueValue == '+'
@@ -131,7 +132,7 @@ public class SmartCalculator extends AbstractCalculator {
               // 32+2=+= case
               val2 = val1;
               lastVal2 = val2;
-              val1 = Calculate(val1, val1, lastKnownQueueValue);
+              val1 = calculate(val1, val1, lastKnownQueueValue);
               lastValidOperation = sign;
               sign = qVar;
               result = String.valueOf(val1);
@@ -139,7 +140,7 @@ public class SmartCalculator extends AbstractCalculator {
               val2 = Integer.parseInt(String.valueOf(number));
               lastVal2 = val2;
               //val2 = convertStringToInt(String.valueOf(number));
-              val1 = Calculate(val1, val2, sign);
+              val1 = calculate(val1, val2, sign);
               lastValidOperation = sign;
               sign = qVar;
               result = String.valueOf(val1);

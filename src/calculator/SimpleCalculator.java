@@ -1,8 +1,5 @@
 package calculator;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
  * This class represents a Simple Calculator.
  * This class also extends the Abstract Calculator class.
@@ -32,14 +29,10 @@ public class SimpleCalculator extends AbstractCalculator {
           return true;
         } else {
           // This means the last element in the queue is an operator
-          if (queue.getLast() == '=') {
-            // The calculator does allow inputting "=" multiple times.
-            // Calculator also allows operators after '='.
-            return true;
-          } else {
-            // Cannot also two operators. Invalid sequence.
-            return false;
-          }
+          // The calculator does allow inputting "=" multiple times.
+          // Calculator also allows operators after '='.
+          // Cannot also two operators. Invalid sequence.
+          return queue.getLast() == '=';
         }
       } else {
         // If a number is coming in immediately after '=' without any operator, then
@@ -60,7 +53,7 @@ public class SimpleCalculator extends AbstractCalculator {
    */
   private void performCalculation() {
     int val1 = 0;
-    int val2 = 0;
+    int val2;
     Character sign = null;
     StringBuilder number = new StringBuilder();
     result = "";
@@ -87,7 +80,6 @@ public class SimpleCalculator extends AbstractCalculator {
               val1 = val1 * -1;
               isFirstQueueASign = false;
             }
-            //val1 = convertStringToInt(String.valueOf(number));
             sign = qVar;
             number.setLength(0);
             if (qVar != '=') {
@@ -98,22 +90,16 @@ public class SimpleCalculator extends AbstractCalculator {
           } else {
             if (sign == '=') {
               sign = qVar;
-              if (qVar != '=') {
-                result += qVar;
-              } else {
-                isLastSignAnEquals = true;
-              }
             } else {
               val2 = Integer.parseInt(String.valueOf(number));
-              //val2 = convertStringToInt(String.valueOf(number));
-              val1 = Calculate(val1, val2, sign);
+              val1 = calculate(val1, val2, sign);
               sign = qVar;
               result = String.valueOf(val1);
-              if (qVar != '=') {
-                result += qVar;
-              } else {
-                isLastSignAnEquals = true;
-              }
+            }
+            if (qVar != '=') {
+              result += qVar;
+            } else {
+              isLastSignAnEquals = true;
             }
             number.setLength(0);
           }

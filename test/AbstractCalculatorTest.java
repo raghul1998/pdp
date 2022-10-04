@@ -4,7 +4,8 @@ import java.util.Random;
 
 import calculator.Calculator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * This class is an abstract class for all the other calculator test classes.
@@ -503,7 +504,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to verify overflow inputs at beginning border number
+   * A JUnit test to verify overflow inputs at beginning border number.
    * Case: 2147483647
    */
   @Test
@@ -534,7 +535,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to verify overflow inputs at beginning just overflow
+   * A JUnit test to verify overflow inputs at beginning just overflow.
    * Case: 2147483648
    */
   @Test
@@ -579,7 +580,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to verify overflow inputs at beginning big number
+   * A JUnit test to verify overflow inputs at beginning big number.
    */
   @Test
   public void testOverflowOperandAtBeginningBorderHugeOverflow() {
@@ -624,7 +625,7 @@ public abstract class AbstractCalculatorTest {
 
 
   /**
-   * A JUnit test to verify overflow inputs
+   * A JUnit test to verify overflow inputs.
    * case: a+b=(ln)
    */
   @Test
@@ -680,7 +681,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to verify overflow inputs
+   * A JUnit test to verify overflow inputs.
    * case: a+b=+(ln)
    */
   @Test
@@ -739,7 +740,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to verify overflow inputs
+   * A JUnit test to verify overflow inputs.
    * case: a+b=-(ln)
    */
   @Test
@@ -798,7 +799,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to verify overflow inputs
+   * A JUnit test to verify overflow inputs.
    * case: a+b=*(ln)
    */
   @Test
@@ -854,7 +855,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to result overflow
+   * A JUnit test to verify result overflow.
    */
   @Test
   public void testValidResultOverflow1() {
@@ -896,7 +897,7 @@ public abstract class AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to result overflow
+   * A JUnit test to verify result overflow.
    */
   @Test
   public void testValidResultOverflow2() {
@@ -960,9 +961,9 @@ public abstract class AbstractCalculatorTest {
     Character previousSign = null;
     Calculator calc = calcObj();
     assertEquals("", calc.getResult());
-    Character array[] = {'+', '-', '*', '='};
+    Character[] array = {'+', '-', '*', '='};
     long resultVal = 3;
-    String resultString = "";
+    String resultString;
 
     calc.input('1');
     calc.input('+');

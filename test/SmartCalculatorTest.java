@@ -1,10 +1,9 @@
-import org.junit.Before;
 import org.junit.Test;
 
 import calculator.Calculator;
 import calculator.SmartCalculator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * A JUnit test class for the Smart Calculator class. This class also extends the Abstract
@@ -22,7 +21,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUint test to verify the + operator at the beginning
+   * A JUint test to verify the + operator at the beginning.
    * Note: My code will not show + operator after inputting at beginning.
    * It will still show empty string.
    * Case: +a, ++a, +++a
@@ -44,7 +43,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUint test to verify the + operator with a sequence
+   * A JUint test to verify the + operator with a sequence.
    * Case: +a+b
    */
   @Test
@@ -70,7 +69,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUint test to verify the + operator with a sequence
+   * A JUint test to verify the + operator with a sequence.
    * Case: ++a+b
    */
   @Test
@@ -98,7 +97,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUint test to verify the + operator with a sequence
+   * A JUint test to verify the + operator with a sequence.
    * Case: +a-b
    */
   @Test
@@ -127,7 +126,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUint test to verify the + operator with a sequence
+   * A JUint test to verify the + operator with a sequence.
    * Case: +a*b
    */
   @Test
@@ -305,7 +304,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to skipping operand test for addition
+   * A JUnit test to skipping operand test for addition.
    * Case: a+=, a+==, a+==+a==
    */
   @Test
@@ -352,7 +351,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
 
 
   /**
-   * A JUnit test to skipping operand test at beginning
+   * A JUnit test to skipping operand test at beginning.
    * Case: a-=, a-==, a-==-a==
    */
   @Test
@@ -398,7 +397,7 @@ public class SmartCalculatorTest extends AbstractCalculatorTest {
   }
 
   /**
-   * A JUnit test to skipping operand test for multiply
+   * A JUnit test to skipping operand test for multiply.
    * Case: a*=, a*==, a*==*a==
    */
   @Test
