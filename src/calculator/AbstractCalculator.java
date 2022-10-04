@@ -23,6 +23,8 @@ public abstract class AbstractCalculator implements Calculator {
   protected String inputNumber = "";
   protected boolean isLastSignAnEquals = false;
 
+  protected boolean blockInput = false;
+
   /**
    * This method checks if the value passed is an operand or not. Meaning it returns true if the
    * value passes is a number, else returns false.
@@ -117,6 +119,134 @@ public abstract class AbstractCalculator implements Calculator {
     this.result = "";
     this.inputNumber = "";
     this.queue.clear();
+  }
+
+  /**
+   * The calculator has certain rules which enforces certain sequence. This method checks if the
+   * sequence is valid and as per rule.
+   *
+   * @param op Input value entered by the user
+   * @return Returns true if the sequence is valid, else returns false
+   */
+  protected boolean checkIfSequenceIsValid(char op) {
+    blockInput = false;
+    if (queue.isEmpty()) {
+      if (isAnOperand(op)) {
+        inputNumber += op;
+        return true;
+      } else {
+        if (this instanceof SmartCalculator) {
+          if (op == '+') {
+            blockInput = true;
+            return true;
+          } else {
+            return false;
+          }
+        }
+        return false;
+      }
+    } else {
+      return checkSequenceElsePart(op);
+    }
+  }
+
+  protected abstract boolean checkSequenceElsePart(char op);
+
+  /**
+   * This is a helper method that performs the calculation. It goes through the queue, analysis
+   * what operation to be performed and performs them accordingly and also stores the result as
+   * string in the global variable.
+   */
+  protected void performCalculation() {
+    int val1 = 0;
+    int val2;
+    Character sign = null;
+    StringBuilder number = new StringBuilder();
+    result = "";
+    isLastSignAnEquals = false;
+    boolean isFirstQueueASign = false;
+
+    if (queue.isEmpty()) {
+      result = "";
+    } else {
+      if (queue.peek() == '-') {
+        isFirstQueueASign = true;
+        result += '-';
+        queue.removeFirst();
+      }
+      for (Character qVar : queue) {
+        isLastSignAnEquals = false;
+        if (isAnOperand(qVar)) {
+          number.append(qVar);
+          result += qVar;
+        } else {
+          if (sign == null) {
+            val1 = Integer.parseInt(String.valueOf(number));
+            if (isFirstQueueASign) {
+              val1 = val1 * -1;
+              isFirstQueueASign = false;
+            }
+            sign = qVar;
+            number.setLength(0);
+            if (qVar != '=') {
+              result += qVar;
+            } else {
+              isLastSignAnEquals = true;
+            }
+          } else {
+            if (sign == '=') {
+              sign = qVar;
+            } else {
+              val2 = Integer.parseInt(String.valueOf(number));
+              val1 = calculate(val1, val2, sign);
+              sign = qVar;
+              result = String.valueOf(val1);
+            }
+            if (qVar != '=') {
+              result += qVar;
+            } else {
+              isLastSignAnEquals = true;
+            }
+            number.setLength(0);
+          }
+        }
+      }
+    }
+    optimizeQueue();
+  }
+
+  @Override
+  public Calculator input(char op) throws IllegalArgumentException {
+    // Clear the cache if the 'C' or 'c' command is provided.
+    if (op == 'C') {
+      clear();
+      return this;
+    }
+    if (!checkIfInputIsValid(op)) {
+      String exception = String.format("Invalid character %c entered.", op);
+      throw new IllegalArgumentException(exception);
+    } else {
+      if (!checkIfSequenceIsValid(op)) {
+        String exception = "Invalid sequence";
+        throw new IllegalArgumentException(exception);
+      } else {
+        if (inputNumber.length() > 0) {
+          long val = Long.parseLong(inputNumber);
+          if (val > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("The entered value is causing overflow");
+          }
+        }
+        if(this instanceof SmartCalculator) {
+          if(!blockInput) {
+            queue.add(op);
+          }
+        } else {
+          queue.add(op);
+        }
+      }
+    }
+    performCalculation();
+    return this;
   }
 
 }
