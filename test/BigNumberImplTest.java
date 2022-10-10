@@ -75,4 +75,15 @@ public class BigNumberImplTest {
     assertEquals("1000123455", result.toString());
   }
 
+  @Test
+  public void compareToTest() {
+    BigNumber one = new BigNumberImpl("999999999");
+    BigNumber two = new BigNumberImpl("999999999");
+    BigNumber three = new BigNumberImpl("12345");
+    assertEquals(true, one.same(two));
+    assertEquals(true, two.same(one));
+    assertEquals(false, one.same(three));
+    assertEquals(false, three.same(one));
+  }
+
 }

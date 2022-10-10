@@ -1,10 +1,10 @@
 package bignumber;
 
 public class NumberADTElementNode implements NumberADT {
-  private Number val;
+  private final Number val;
   private NumberADT rest;
 
-  public NumberADTElementNode (Number num, NumberADT rest) {
+  public NumberADTElementNode(Number num, NumberADT rest) {
     this.val = num;
     this.rest = rest;
   }
@@ -35,11 +35,10 @@ public class NumberADTElementNode implements NumberADT {
 
   @Override
   public NumberADT removeAt(int length) {
-    if(length == 1) {
+    if (length == 1) {
       return this.rest;
-    }
-    else {
-      length = length-1;
+    } else {
+      length = length - 1;
       this.rest = this.rest.removeAt(length);
       return this;
     }
@@ -47,21 +46,19 @@ public class NumberADTElementNode implements NumberADT {
 
   @Override
   public int getAt(int position) {
-    if(position == this.count()) {
+    if (position == this.count()) {
       return this.val.getValue();
-    }
-    else {
+    } else {
       return this.rest.getAt(position);
     }
   }
 
   @Override
   public NumberADT replaceAt(int value, int position) {
-    if(position == this.count()) {
+    if (position == this.count()) {
       this.val.replaceValue(value);
       return this;
-    }
-    else {
+    } else {
       return this.rest.replaceAt(value, position);
     }
   }

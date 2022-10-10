@@ -126,12 +126,36 @@ public class BigNumberImpl implements BigNumber {
 
   @Override
   public boolean same(BigNumber num) {
-    return false;
+    int result = this.compareTo(num);
+    return result == 0;
   }
 
   @Override
-  public int compareTo(BigNumber o) {
-    return 0;
+  public int compareTo(BigNumber obj) {
+    if (this == obj) {
+      return 0;
+    }
+
+    String opr1 = this.toString();
+    String opr2 = obj.toString();
+
+    int opr1Length = opr1.length();
+    int opr2Length = opr2.length();
+
+    if (opr1Length > opr2Length) {
+      return 1;
+    } else if (opr1Length < opr2Length) {
+      return -1;
+    } else {
+      for (int i = 0; i < opr1Length; i++) {
+        if (opr1.charAt(i) > opr2.charAt(i)) {
+          return 1;
+        } else if (opr1.charAt(i) < opr2.charAt(i)) {
+          return -1;
+        }
+      }
+      return 0;
+    }
   }
 
   public String toString() {
