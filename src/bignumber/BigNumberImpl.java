@@ -4,11 +4,12 @@ import java.util.Objects;
 
 public class BigNumberImpl implements BigNumber {
   private NumberADT head;
+  private NumberADT tail;
   private int count;
 
   public BigNumberImpl() {
-    head = new NumberADTEmptyNode();
-    head = head.addBack(new Number(0));
+    head = tail = new NumberADTEmptyNode();
+    head = tail = tail.addBack(new Number(0));
     this.count++;
   }
 
@@ -18,9 +19,11 @@ public class BigNumberImpl implements BigNumber {
     }
 
     if (checkIfStringIsValid(number)) {
-      head = new NumberADTEmptyNode();
-      for (int i = 0; i < number.length(); i++) {
-        head = head.addBack(new Number(Character.getNumericValue(number.charAt(i))));
+      head = tail = new NumberADTEmptyNode();
+      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(0))));
+      this.count++;
+      for (int i = 1; i < number.length(); i++) {
+        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))));
         this.count++;
       }
     } else {
