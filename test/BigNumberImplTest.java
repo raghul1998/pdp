@@ -86,4 +86,10 @@ public class BigNumberImplTest {
     assertEquals(false, three.same(one));
   }
 
+  @Test
+  public void Test() {
+    BigNumber one = new BigNumberImpl("5");
+    one.shiftRight(2000);
+    assertEquals("0", one.toString());
+  }
 }

@@ -11,7 +11,7 @@ public interface NumberADT {
 
   String toStringHelper(StringBuilder acc);
 
-  NumberADT removeAt(int length);
+  NumberADT removeAt(int length, boolean isSingleDigit);
 
   int getAt(int position);
 

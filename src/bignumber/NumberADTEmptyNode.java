@@ -26,7 +26,7 @@ public class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
-  public NumberADT removeAt(int length) {
+  public NumberADT removeAt(int length, boolean isSingleDigit) {
     // Cannot remove anything from empty node
     return this;
   }

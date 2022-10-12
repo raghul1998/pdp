@@ -46,7 +46,7 @@ public class BigNumberImpl implements BigNumber {
   public void shiftRight(int shifts) {
     if (shifts > 0 && (!head.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
-        head = head.removeAt(head.count());
+        head = head.removeAt(head.count(), head.count() > 1 ? false : true);
       }
     }
     if (shifts < 0 && (!head.toString().equals("0"))) {

@@ -34,12 +34,18 @@ public class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public NumberADT removeAt(int length) {
-    if (length == 1) {
+  public NumberADT removeAt(int length, boolean isSingleDigit) {
+    if (isSingleDigit && length == 1 && this.val.getValue() != 0) {
+      this.val.replaceValue(0);
+      return this;
+    } else if (isSingleDigit && length == 1 && this.val.getValue() == 0) {
+      return this;
+    } else if (!isSingleDigit && length == 1) {
       return this.rest;
-    } else {
+    }
+    else {
       length = length - 1;
-      this.rest = this.rest.removeAt(length);
+      this.rest = this.rest.removeAt(length, false);
       return this;
     }
   }
