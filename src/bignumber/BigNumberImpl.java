@@ -15,7 +15,7 @@ public class BigNumberImpl implements BigNumber {
 
   public BigNumberImpl(String number) throws IllegalArgumentException {
     if (number == null || number.equals("")) {
-      throw new IllegalArgumentException("Null String");
+      throw new IllegalArgumentException("Null or Empty String");
     }
 
     if (checkIfStringIsValid(number)) {
@@ -27,7 +27,7 @@ public class BigNumberImpl implements BigNumber {
         this.count++;
       }
     } else {
-      throw new IllegalArgumentException("Invalid Character");
+      throw new IllegalArgumentException("Invalid Number");
     }
   }
 
