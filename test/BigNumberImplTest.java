@@ -89,6 +89,14 @@ public class BigNumberImplTest {
   @Test
   public void Test() {
     BigNumber one = new BigNumberImpl("5");
+    one.shiftLeft(2);
+    assertEquals("500", one.toString());
+    one.shiftRight(1);
+    assertEquals("50", one.toString());
+    one.shiftRight(1);
+    assertEquals("5", one.toString());
+    one.shiftRight(1);
+    assertEquals("0", one.toString());
     one.shiftRight(2000);
     assertEquals("0", one.toString());
   }

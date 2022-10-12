@@ -38,26 +38,26 @@ public class BigNumberImpl implements BigNumber {
 
   @Override
   public void shiftLeft(int shifts) {
-    if ((shifts > 0) && (!this.toString().equals("0"))) {
+    if ((shifts > 0) && (this.count > 1 || !this.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
-        head = head.addBack(new Number(0));
+        tail = tail.addBack(new Number(0));
         this.count++;
       }
     }
-    if (shifts < 0 && (!this.toString().equals("0"))) {
+    if (shifts < 0) {
       shiftRight(shifts * -1);
     }
   }
 
   @Override
   public void shiftRight(int shifts) {
-    if (shifts > 0 && (!head.toString().equals("0"))) {
+    if (shifts > 0 && (this.count > 1 || !this.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
         head = head.removeAt(this.count, this.count > 1 ? false : true);
         this.count--;
       }
     }
-    if (shifts < 0 && (!head.toString().equals("0"))) {
+    if (shifts < 0) {
       shiftLeft(shifts * -1);
     }
   }
