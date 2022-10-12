@@ -1,14 +1,59 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 import bignumber.BigNumber;
 import bignumber.BigNumberImpl;
+import bignumber.NumberADT;
 
 import static org.junit.Assert.*;
 
 public class BigNumberImplTest {
   private BigNumber obj;
   private BigNumber obj2;
+
+  private String generateRandomInteger() {
+    Random random = new Random();
+    StringBuilder str = new StringBuilder();
+    boolean firstVal = false;
+
+    for (int i = 0; i < random.nextInt(2000); i++) {
+      int randValue = random.nextInt(10);
+      if (!firstVal) {
+        if (randValue == 0) {
+          continue;
+        }
+        firstVal = true;
+      }
+      str.append(randValue);
+    }
+
+    if (str.length() == 0) {
+      str.append(random.nextInt(10));
+    }
+
+    return str.toString();
+  }
+
+  private String generateRandomBigInteger() {
+    Random random = new Random();
+    StringBuilder str = new StringBuilder();
+    boolean firstVal = false;
+
+    for (int i = 0; i < 2000; i++) {
+      int randValue = random.nextInt(10);
+      if (!firstVal) {
+        if (randValue == 0) {
+          continue;
+        }
+        firstVal = true;
+      }
+      str.append(randValue);
+    }
+
+    return str.toString();
+  }
 
   @Before
   public void setup() {
@@ -20,16 +65,38 @@ public class BigNumberImplTest {
   public void lengthTest() {
     assertEquals(1, obj.length());
     assertEquals(3, obj2.length());
+
+    for (int i = 0; i < 100; i++) {
+      String str1 = generateRandomInteger();
+      String str2 = generateRandomBigInteger();
+
+      BigNumber temp1 = new BigNumberImpl(str1);
+      assertEquals(str1.length(), temp1.length());
+
+      BigNumber temp2 = new BigNumberImpl(str2);
+      assertEquals(str2.length(), temp2.length());
+    }
   }
 
   @Test
   public void toStringTest() {
     assertEquals("0", obj.toString());
     assertEquals("123", obj2.toString());
+
+    for (int i = 0; i < 100; i++) {
+      String str1 = generateRandomInteger();
+      String str2 = generateRandomBigInteger();
+
+      BigNumber temp1 = new BigNumberImpl(str1);
+      assertEquals(str1, temp1.toString());
+
+      BigNumber temp2 = new BigNumberImpl(str2);
+      assertEquals(str2, temp2.toString());
+    }
   }
 
   @Test
-  public void shiftTest() {
+  public void shiftTestGeneral() {
     obj.shiftLeft(2);
     assertEquals("0", obj.toString());
     obj2.shiftLeft(2);
@@ -41,6 +108,203 @@ public class BigNumberImplTest {
     obj2.shiftRight(2);
     assertEquals("123", obj2.toString());
   }
+
+  @Test
+  public void leftShiftTestEmpty() {
+    BigNumber obj = new BigNumberImpl();
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftLeft(0);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftLeft(1);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftLeft(2);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftLeft(756543);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+  }
+
+  @Test
+  public void leftShiftTestNumberByOne() {
+    String str = generateRandomBigInteger();
+    BigNumber obj = new BigNumberImpl(str);
+    assertEquals(str, obj.toString());
+    assertEquals(str.length(), obj.length());
+
+    for (int i = 0; i < 100; i++) {
+      str += "0";
+      obj.shiftLeft(1);
+      assertEquals(str, obj.toString());
+      assertEquals(str.length(), obj.length());
+    }
+    assertEquals(str, obj.toString());
+    assertEquals(str.length(), obj.length());
+  }
+
+  @Test
+  public void leftShiftTestNumberByRandom() {
+    Random random = new Random();
+    String str = generateRandomInteger();
+    BigNumber obj = new BigNumberImpl(str);
+    assertEquals(str, obj.toString());
+    assertEquals(str.length(), obj.length());
+
+    for (int i = 0; i < 100; i++) {
+      int randValue = random.nextInt(100);
+      for (int j = 0; j < randValue; j++) {
+        str += "0";
+      }
+      obj.shiftLeft(randValue);
+      assertEquals(str, obj.toString());
+      assertEquals(str.length(), obj.length());
+    }
+    assertEquals(str, obj.toString());
+    assertEquals(str.length(), obj.length());
+  }
+
+  @Test
+  public void leftShiftNumberCreationByOne() {
+    Random random = new Random();
+    BigNumber obj = new BigNumberImpl();
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    StringBuilder str = new StringBuilder();
+    boolean isFirstDigit = true;
+    for (int i = 0; i < 1000; i++) {
+      int val = random.nextInt(10);
+      if (isFirstDigit && val == 0) {
+        continue;
+      }
+
+      obj.shiftLeft(1);
+      if (isFirstDigit) {
+        assertEquals("0", obj.toString());
+        assertEquals(1, obj.length());
+      } else {
+        StringBuilder temp = new StringBuilder(str.toString());
+        temp.append("0");
+        assertEquals(temp.toString(), obj.toString());
+        assertEquals(temp.length(), obj.length());
+      }
+      obj.addDigit(val);
+      str.append(val);
+      assertEquals(str.toString(), obj.toString());
+      assertEquals(str.length(), obj.length());
+      isFirstDigit = false;
+    }
+  }
+
+  @Test
+  public void leftShiftNumberCreationByRandom() {
+    Random random = new Random();
+    BigNumber obj = new BigNumberImpl();
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    StringBuilder str = new StringBuilder();
+    boolean isFirstDigit = true;
+    for (int i = 0; i < 100; i++) {
+      int val = random.nextInt(10);
+      if (isFirstDigit && val == 0) {
+        continue;
+      }
+
+      obj.shiftLeft(val);
+      if (isFirstDigit) {
+        assertEquals("0", obj.toString());
+        assertEquals(1, obj.length());
+        str.append("0");
+      } else {
+        str.append("0".repeat(val));
+        assertEquals(str.toString(), obj.toString());
+        assertEquals(str.length(), obj.length());
+      }
+
+      obj.addDigit(val);
+
+      if (val != 0) {
+        str.replace(str.length() - 1, str.length(), Integer.toString(val));
+      }
+
+      assertEquals(str.toString(), obj.toString());
+      assertEquals(str.length(), obj.length());
+      isFirstDigit = false;
+    }
+  }
+
+  @Test
+  public void leftRightTestEmpty() {
+    BigNumber obj = new BigNumberImpl();
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftRight(0);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftRight(1);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftRight(2);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftRight(756543);
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+  }
+
+  @Test
+  public void leftRightTestNumberByOne() {
+    StringBuilder str = new StringBuilder(generateRandomBigInteger());
+    BigNumber obj = new BigNumberImpl(str.toString());
+    assertEquals(str.toString(), obj.toString());
+    assertEquals(str.length(), obj.length());
+
+    for (int i = 0; i < 100; i++) {
+      str.deleteCharAt(str.length() - 1);
+      obj.shiftRight(1);
+      assertEquals(str.toString(), obj.toString());
+      assertEquals(str.length(), obj.length());
+    }
+    assertEquals(str.toString(), obj.toString());
+    assertEquals(str.length(), obj.length());
+  }
+
+  @Test
+  public void leftRightTestNumberByRandom() {
+    Random random = new Random();
+    StringBuilder str = new StringBuilder(generateRandomBigInteger());
+    BigNumber obj = new BigNumberImpl(str.toString());
+    assertEquals(str.toString(), obj.toString());
+    assertEquals(str.length(), obj.length());
+
+    for (int i = 0; i < 100; i++) {
+      int randValue = random.nextInt(100);
+      obj.shiftRight(randValue);
+      if (str.length() - randValue > 0) {
+        str.delete(str.length() - randValue, str.length());
+      } else {
+        str.setLength(0);
+        str.append("0");
+      }
+      assertEquals(str.toString(), obj.toString());
+      assertEquals(str.length(), obj.length());
+    }
+    assertEquals(str.toString(), obj.toString());
+    assertEquals(str.length(), obj.length());
+  }
+
 
   @Test
   public void getPositionTest() {
@@ -89,15 +353,9 @@ public class BigNumberImplTest {
   @Test
   public void Test() {
     BigNumber one = new BigNumberImpl("5");
-    one.shiftLeft(2);
-    assertEquals("500", one.toString());
-    one.shiftRight(1);
-    assertEquals("50", one.toString());
-    one.shiftRight(1);
-    assertEquals("5", one.toString());
-    one.shiftRight(1);
+    assertEquals(1, one.length());
+    one.shiftRight(20);
     assertEquals("0", one.toString());
-    one.shiftRight(2000);
-    assertEquals("0", one.toString());
+    assertEquals(1, one.length());
   }
 }

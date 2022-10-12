@@ -44,7 +44,7 @@ public class BigNumberImpl implements BigNumber {
         this.count++;
       }
     }
-    if (shifts < 0) {
+    else if (shifts < 0) {
       shiftRight(shifts * -1);
     }
   }
@@ -55,9 +55,14 @@ public class BigNumberImpl implements BigNumber {
       for (int i = 0; i < shifts; i++) {
         head = head.removeAt(this.count, this.count > 1 ? false : true);
         this.count--;
+        // Break loop when we reach 0 number
+        if(this.count == 0) {
+          this.count++;
+          break;
+        }
       }
     }
-    if (shifts < 0) {
+    else if (shifts < 0) {
       shiftLeft(shifts * -1);
     }
   }
