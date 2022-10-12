@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public class BigNumberImpl implements BigNumber {
   private NumberADT head;
+  private int count;
 
   public BigNumberImpl() {
     head = new NumberADTEmptyNode();
     head = head.addBack(new Number(0));
+    this.count++;
   }
 
   public BigNumberImpl(String number) throws IllegalArgumentException {
@@ -19,6 +21,7 @@ public class BigNumberImpl implements BigNumber {
       head = new NumberADTEmptyNode();
       for (int i = 0; i < number.length(); i++) {
         head = head.addBack(new Number(Character.getNumericValue(number.charAt(i))));
+        this.count++;
       }
     } else {
       throw new IllegalArgumentException("Invalid Character");
@@ -27,7 +30,7 @@ public class BigNumberImpl implements BigNumber {
 
   @Override
   public int length() {
-    return head.count();
+    return this.count;
   }
 
   @Override
@@ -35,6 +38,7 @@ public class BigNumberImpl implements BigNumber {
     if ((shifts > 0) && (!this.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
         head = head.addBack(new Number(0));
+        this.count++;
       }
     }
     if (shifts < 0 && (!this.toString().equals("0"))) {
@@ -46,7 +50,8 @@ public class BigNumberImpl implements BigNumber {
   public void shiftRight(int shifts) {
     if (shifts > 0 && (!head.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
-        head = head.removeAt(head.count(), head.count() > 1 ? false : true);
+        head = head.removeAt(this.count, this.count > 1 ? false : true);
+        this.count--;
       }
     }
     if (shifts < 0 && (!head.toString().equals("0"))) {
@@ -88,6 +93,7 @@ public class BigNumberImpl implements BigNumber {
       if (carry) {
         //value.insert(0, 1);
         head = this.head.addFront(new Number(1));
+        this.count++;
       }
       /*this.head = new NumberADTEmptyNode();
       for(int i = 0; i < value.length(); i++) {
