@@ -108,7 +108,7 @@ public class BigNumberImpl implements BigNumber {
       throw new IllegalArgumentException("Invalid position");
     }
 
-    return head.getAt(position + 1);
+    return head.getAt(position + 1, count);
   }
 
   @Override

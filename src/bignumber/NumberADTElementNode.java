@@ -44,18 +44,17 @@ public class NumberADTElementNode implements NumberADT {
       return this.rest;
     }
     else {
-      length = length - 1;
-      this.rest = this.rest.removeAt(length, false);
+      this.rest = this.rest.removeAt(length-1, false);
       return this;
     }
   }
 
   @Override
-  public int getAt(int position) {
-    if (position == this.count()) {
+  public int getAt(int position, int count) {
+    if (position == count) {
       return this.val.getValue();
     } else {
-      return this.rest.getAt(position);
+      return this.rest.getAt(position, count-1);
     }
   }
 

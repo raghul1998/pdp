@@ -13,7 +13,7 @@ public interface NumberADT {
 
   NumberADT removeAt(int length, boolean isSingleDigit);
 
-  int getAt(int position);
+  int getAt(int position, int count);
 
   NumberADT replaceAt(int value, int position);
 }

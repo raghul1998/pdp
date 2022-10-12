@@ -32,7 +32,7 @@ public class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
-  public int getAt(int position) throws IllegalArgumentException {
+  public int getAt(int position, int count) throws IllegalArgumentException {
     throw new IllegalArgumentException("Invalid Position");
   }
 
