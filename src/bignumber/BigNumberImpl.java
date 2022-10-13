@@ -33,7 +33,7 @@ public class BigNumberImpl implements BigNumber {
 
   @Override
   public int length() {
-    return this.count;
+    return head.count();
   }
 
   @Override
@@ -117,7 +117,7 @@ public class BigNumberImpl implements BigNumber {
     if (position < 0) {
       throw new IllegalArgumentException("Invalid position");
     }
-    if (position >= this.length()) {
+    if (position >= this.count) {
       return 0;
     }
     return head.getAt(position + 1, count);
@@ -134,7 +134,7 @@ public class BigNumberImpl implements BigNumber {
       return this;
     }
     String result;
-    if (this.length() <= num.length()) {
+    if (this.count <= num.length()) {
       result = sumOfTwoBigNumbers(this.toString(), num.toString());
     } else {
       result = sumOfTwoBigNumbers(num.toString(), this.toString());
