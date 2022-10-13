@@ -17,7 +17,7 @@ public class NumberADTElementNode implements NumberADT {
   @Override
   public NumberADT addBack(Number num) {
     this.rest = this.rest.addBack(num);
-    return this;
+    return this.rest;
   }
 
   @Override
@@ -34,17 +34,18 @@ public class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public NumberADT removeAt(int length, boolean isSingleDigit) {
+  public NumberADT removeAt(int length, boolean isSingleDigit, NumberADT tail) {
     if (isSingleDigit && length == 1 && this.val.getValue() != 0) {
       this.val.replaceValue(0);
       return this;
     } else if (isSingleDigit && length == 1 && this.val.getValue() == 0) {
       return this;
     } else if (!isSingleDigit && length == 1) {
+      tail = this.rest;
       return this.rest;
     }
     else {
-      this.rest = this.rest.removeAt(length-1, false);
+      this.rest = this.rest.removeAt(length-1, false, tail);
       return this;
     }
   }
@@ -66,6 +67,16 @@ public class NumberADTElementNode implements NumberADT {
     } else {
       return this.rest.replaceAt(value, position);
     }
+  }
+
+  @Override
+  public NumberADT next() {
+    return this.rest;
+  }
+
+  @Override
+  public void setNext(NumberADT node) {
+    this.rest = node;
   }
 
 }

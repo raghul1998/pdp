@@ -43,8 +43,7 @@ public class BigNumberImpl implements BigNumber {
         tail = tail.addBack(new Number(0));
         this.count++;
       }
-    }
-    else if (shifts < 0) {
+    } else if (shifts < 0) {
       shiftRight(shifts * -1);
     }
   }
@@ -52,17 +51,35 @@ public class BigNumberImpl implements BigNumber {
   @Override
   public void shiftRight(int shifts) {
     if (shifts > 0 && (this.count > 1 || !this.toString().equals("0"))) {
-      for (int i = 0; i < shifts; i++) {
-        head = head.removeAt(this.count, this.count > 1 ? false : true);
+      /*for (int i = 0; i < shifts; i++) {
+        head = head.removeAt(this.count, this.count > 1 ? false : true, tail);
         this.count--;
         // Break loop when we reach 0 number
         if(this.count == 0) {
           this.count++;
           break;
         }
+      }*/
+
+      if (shifts < this.count - 1) {
+        NumberADT temp = head;
+        for (int i = 0; i < this.count - shifts - 1; i++) {
+          temp = temp.next();
+        }
+        tail = temp;
+        tail.setNext(new NumberADTEmptyNode());
+        this.count = this.count - shifts;
+      } else if (shifts + 1 == this.count) {
+        tail = head;
+        tail.setNext(new NumberADTEmptyNode());
+        this.count = 1;
+      } else {
+        head = tail = new NumberADTEmptyNode();
+        head = tail = tail.addBack(new Number(0));
+        this.count = 1;
       }
-    }
-    else if (shifts < 0) {
+
+    } else if (shifts < 0) {
       shiftLeft(shifts * -1);
     }
   }

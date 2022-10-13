@@ -1350,11 +1350,8 @@ public class BigNumberImplTest {
 
   @Test
   public void Test() {
-    BigNumber one = new BigNumberImpl("5");
-    assertEquals(1, one.length());
-    one.shiftRight(20);
-    assertEquals("0", one.toString());
-    assertEquals(1, one.length());
+    BigNumber one = new BigNumberImpl("581");
+    assertEquals(3, one.length());
   }
 
   private String generateRandomInteger() {

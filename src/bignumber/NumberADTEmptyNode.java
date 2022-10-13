@@ -26,7 +26,7 @@ public class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
-  public NumberADT removeAt(int length, boolean isSingleDigit) {
+  public NumberADT removeAt(int length, boolean isSingleDigit, NumberADT tail) {
     // Cannot remove anything from empty node
     return this;
   }
@@ -40,6 +40,16 @@ public class NumberADTEmptyNode implements NumberADT {
   public NumberADT replaceAt(int value, int position) {
     // Nothing to replace
     throw new IllegalArgumentException("Invalid Position");
+  }
+
+  @Override
+  public NumberADT next() {
+    return null;
+  }
+
+  @Override
+  public void setNext(NumberADT node) {
+    return;
   }
 
 }

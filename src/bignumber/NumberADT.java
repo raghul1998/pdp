@@ -11,9 +11,13 @@ public interface NumberADT {
 
   String toStringHelper(StringBuilder acc);
 
-  NumberADT removeAt(int length, boolean isSingleDigit);
+  NumberADT removeAt(int length, boolean isSingleDigit, NumberADT tail);
 
   int getAt(int position, int count);
 
   NumberADT replaceAt(int value, int position);
+
+  NumberADT next();
+
+  void setNext(NumberADT node);
 }
