@@ -1291,6 +1291,218 @@ public class BigNumberImplTest {
   }
 
   @Test
+  public void orderingEmpty() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl();
+    assertEquals(0, one.compareTo(two));
+    assertEquals(0, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestEmptyItself() {
+    BigNumber one = new BigNumberImpl();
+    assertEquals(0, one.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestEmptyItself2() {
+    BigNumber one = new BigNumberImpl("0");
+    assertEquals(0, one.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestEmptyItself3() {
+    BigNumber one = new BigNumberImpl("23434545653421245678765");
+    assertEquals(0, one.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestEmptyToEmpty() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl();
+    assertEquals(0, one.compareTo(two));
+    assertEquals(0, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestEmptyToEmpty1() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl("0");
+    assertEquals(0, one.compareTo(two));
+    assertEquals(0, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingToTestEmptyToNonEmpty2() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl("335443235");
+    assertEquals(-1, one.compareTo(two));
+    assertEquals(1, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingToTestNonEmptySame() {
+    BigNumber one = new BigNumberImpl("2345643423");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(0, one.compareTo(two));
+    assertEquals(0, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingToTestNonEmptyDifferent1() {
+    BigNumber one = new BigNumberImpl("0");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(-1, one.compareTo(two));
+    assertEquals(1, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestNonEmptyDifferent2() {
+    BigNumber one = new BigNumberImpl("1243");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(-1, one.compareTo(two));
+    assertEquals(1, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingToTestNonEmptyDifferentBigNumberSame() {
+    String str = generateRandomBigInteger();
+    BigNumber one = new BigNumberImpl(str);
+    BigNumber two = new BigNumberImpl(str);
+    assertEquals(0, one.compareTo(two));
+    assertEquals(0, two.compareTo(one));
+  }
+
+  @Test
+  public void orderingTestNonEmptyDifferentBigNumberDifferent() {
+    String val1 = generateRandomBigInteger();
+    String val2 = generateRandomBigInteger();
+    BigNumber one = new BigNumberImpl(val1);
+    BigNumber two = new BigNumberImpl(val2);
+
+    int expected = 0;
+    if (val1.length() > val2.length()) {
+      expected = 1;
+    } else if (val1.length() < val2.length()) {
+      expected = -1;
+    } else {
+      for (int i = 0; i < val1.length(); i++) {
+        if (val1.charAt(i) != val2.charAt(i)) {
+          expected = Character.compare(val1.charAt(i), val2.charAt(i));
+          break;
+        }
+      }
+
+      if (expected < 0) {
+        expected = -1;
+      } else if (expected > 0) {
+        expected = 1;
+      }
+    }
+
+    assertEquals(expected, one.compareTo(two));
+    assertEquals(expected * -1, two.compareTo(one));
+  }
+
+  @Test
+  public void equalsEmpty() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl();
+    assertEquals(true, one.equals(two));
+    assertEquals(true, two.equals(one));
+
+    assertEquals(false, one.equals(""));
+  }
+
+  @Test
+  public void equalsTestEmptyItself() {
+    BigNumber one = new BigNumberImpl();
+    assertEquals(true, one.equals(one));
+  }
+
+  @Test
+  public void equalsTestEmptyItself2() {
+    BigNumber one = new BigNumberImpl("0");
+    assertEquals(true, one.equals(one));
+  }
+
+  @Test
+  public void equalsTestEmptyItself3() {
+    BigNumber one = new BigNumberImpl("23434545653421245678765");
+    assertEquals(true, one.equals(one));
+  }
+
+  @Test
+  public void equalsTestEmptyToEmpty() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl();
+    assertEquals(true, one.equals(two));
+    assertEquals(true, two.equals(one));
+  }
+
+  @Test
+  public void equalsTestEmptyToEmpty1() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl("0");
+    assertEquals(true, one.equals(two));
+    assertEquals(true, two.equals(one));
+  }
+
+  @Test
+  public void equalsToTestEmptyToNonEmpty2() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl("335443235");
+    assertEquals(false, one.equals(two));
+    assertEquals(false, two.equals(one));
+  }
+
+  @Test
+  public void equalsToTestNonEmptySame() {
+    BigNumber one = new BigNumberImpl("2345643423");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(true, one.equals(two));
+    assertEquals(true, two.equals(one));
+  }
+
+  @Test
+  public void equalsToTestNonEmptyDifferent1() {
+    BigNumber one = new BigNumberImpl("0");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(false, one.equals(two));
+    assertEquals(false, two.equals(one));
+  }
+
+  @Test
+  public void equalsTestNonEmptyDifferent2() {
+    BigNumber one = new BigNumberImpl("1243");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(false, one.equals(two));
+    assertEquals(false, two.equals(one));
+  }
+
+  @Test
+  public void equalsToTestNonEmptyDifferentBigNumberSame() {
+    String str = generateRandomBigInteger();
+    BigNumber one = new BigNumberImpl(str);
+    BigNumber two = new BigNumberImpl(str);
+    assertEquals(true, one.equals(two));
+    assertEquals(true, two.equals(one));
+  }
+
+  @Test
+  public void equalsTestNonEmptyDifferentBigNumberDifferent() {
+    String val1 = generateRandomBigInteger();
+    String val2 = generateRandomBigInteger();
+    BigNumber one = new BigNumberImpl(val1);
+    BigNumber two = new BigNumberImpl(val2);
+
+    boolean expected = val1.equals(val2);
+
+    assertEquals(expected, one.equals(two));
+    assertEquals(expected, two.equals(one));
+  }
+
+  @Test
   public void Test() {
     BigNumber one = new BigNumberImpl("581");
     assertEquals(3, one.length());

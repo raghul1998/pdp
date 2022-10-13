@@ -159,6 +159,25 @@ public class BigNumberImpl implements BigNumber {
     return this.head.toString();
   }
 
+  @Override
+  public final boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+
+    if (!(obj instanceof BigNumber)) {
+      return false;
+    }
+
+    BigNumber num = (BigNumber) obj;
+    return Objects.equals(this.toString(), num.toString());
+  }
+
+  @Override
+  public int hashCode () {
+    return Long.hashCode(Long.parseLong(this.toString()));
+  }
+
   private boolean checkIfStringIsValid(String num) {
     boolean result = true;
     for (int i = 0; i < num.length(); i++) {

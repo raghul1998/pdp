@@ -16,6 +16,4 @@ public interface BigNumber extends Comparable<BigNumber> {
   BigNumber add(BigNumber num);
 
   boolean same(BigNumber num);
-
-  String toString();
 }
