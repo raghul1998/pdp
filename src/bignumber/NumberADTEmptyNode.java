@@ -55,7 +55,6 @@ class NumberADTEmptyNode implements NumberADT {
 
   @Override
   public void setNext(NumberADT node) {
-    return;
   }
 
   @Override
@@ -77,11 +76,7 @@ class NumberADTEmptyNode implements NumberADT {
       return false;
     }
 
-    if (this.next() == null && this.prev() == null) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.next() == null && this.prev() == null;
   }
 
   @Override

@@ -47,7 +47,7 @@ class NumberADTElementNode implements NumberADT {
       return this;
     } else if (!isSingleDigit && length == 1) {
       tail = this.rest;
-      return this.rest;
+      return tail;
     } else {
       this.rest = this.rest.removeAt(length - 1, false, tail);
       return this;
