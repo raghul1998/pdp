@@ -5,7 +5,6 @@ import java.util.Random;
 
 import bignumber.BigNumber;
 import bignumber.BigNumberImpl;
-import bignumber.NumberADT;
 
 import static org.junit.Assert.*;
 
@@ -25,35 +24,35 @@ public class BigNumberImplTest {
   @Test
   public void testConstructor() {
     try {
-      BigNumber obj = new BigNumberImpl("");
+      new BigNumberImpl("");
       fail("Expected exception did not occur");
     } catch (IllegalArgumentException e) {
       assertEquals("Null or Empty String", e.getMessage());
     }
 
     try {
-      BigNumber obj = new BigNumberImpl("-1");
+      new BigNumberImpl("-1");
       fail("Expected exception did not occur");
     } catch (IllegalArgumentException e) {
       assertEquals("Invalid Number", e.getMessage());
     }
 
     try {
-      BigNumber obj = new BigNumberImpl(null);
+      new BigNumberImpl(null);
       fail("Expected exception did not occur");
     } catch (IllegalArgumentException e) {
       assertEquals("Null or Empty String", e.getMessage());
     }
 
     try {
-      BigNumber obj = new BigNumberImpl("-928374393");
+      new BigNumberImpl("-928374393");
       fail("Expected exception did not occur");
     } catch (IllegalArgumentException e) {
       assertEquals("Invalid Number", e.getMessage());
     }
 
     try {
-      BigNumber obj = new BigNumberImpl("#(239ueojv9*^&YUIhaeviik");
+      new BigNumberImpl("#(239ueojv9*^&YUIhaeviik");
       fail("Expected exception did not occur");
     } catch (IllegalArgumentException e) {
       assertEquals("Invalid Number", e.getMessage());
@@ -678,34 +677,18 @@ public class BigNumberImplTest {
   }
 
   @Test
-  public void addDigitFuzzy () {
+  public void addDigitFuzzy() {
     String str = generateRandomBigInteger();
     BigNumber obj = new BigNumberImpl(str);
     Random rand = new Random();
 
-    for(int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 1000; i++) {
       int val = rand.nextInt(10);
       obj.addDigit(val);
       str = sumOfTwoBigNumbers(Integer.toString(val), str);
       assertEquals(str, obj.toString());
       assertEquals(str.length(), obj.length());
     }
-  }
-
-  @Test
-  public void getPositionTest() {
-    assertEquals(0, obj.getDigitAt(0));
-    assertEquals(3, obj2.getDigitAt(0));
-    assertEquals(2, obj2.getDigitAt(1));
-    assertEquals(1, obj2.getDigitAt(2));
-  }
-
-  @Test
-  public void copyTest() {
-    BigNumber copy = obj2.copy();
-    copy.shiftLeft(2);
-    assertEquals("12300", copy.toString());
-    assertEquals("123", obj2.toString());
   }
 
   @Test
@@ -719,6 +702,559 @@ public class BigNumberImplTest {
   }
 
   @Test
+  public void addEmptyObject() {
+    BigNumber obj1 = new BigNumberImpl();
+    BigNumber obj2 = new BigNumberImpl();
+    BigNumber obj3;
+
+    obj3 = obj1.add(obj2);
+    assertEquals("0", obj3.toString());
+    assertEquals(1, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("0", obj2.toString());
+    assertEquals(1, obj2.length());
+
+    obj3 = obj2.add(obj1);
+    assertEquals("0", obj3.toString());
+    assertEquals(1, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("0", obj2.toString());
+    assertEquals(1, obj2.length());
+  }
+
+  @Test
+  public void addEmptyObject2() {
+    BigNumber obj1 = new BigNumberImpl();
+    BigNumber obj2 = new BigNumberImpl("0");
+    BigNumber obj3;
+
+    obj3 = obj1.add(obj2);
+    assertEquals("0", obj3.toString());
+    assertEquals(1, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("0", obj2.toString());
+    assertEquals(1, obj2.length());
+
+    obj3 = obj2.add(obj1);
+    assertEquals("0", obj3.toString());
+    assertEquals(1, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("0", obj2.toString());
+    assertEquals(1, obj2.length());
+  }
+
+  @Test
+  public void addEmptyObject3() {
+    BigNumber obj1 = new BigNumberImpl("0");
+    BigNumber obj2 = new BigNumberImpl("0");
+    BigNumber obj3;
+
+    obj3 = obj1.add(obj2);
+    assertEquals("0", obj3.toString());
+    assertEquals(1, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("0", obj2.toString());
+    assertEquals(1, obj2.length());
+
+    obj3 = obj2.add(obj1);
+    assertEquals("0", obj3.toString());
+    assertEquals(1, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("0", obj2.toString());
+    assertEquals(1, obj2.length());
+  }
+
+  @Test
+  public void addEmptyWithNonEmpty1() {
+    BigNumber obj1 = new BigNumberImpl();
+    BigNumber obj2 = new BigNumberImpl("12345");
+    BigNumber obj3;
+
+    obj3 = obj1.add(obj2);
+    assertEquals("12345", obj3.toString());
+    assertEquals(5, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("12345", obj2.toString());
+    assertEquals(5, obj2.length());
+
+    obj3 = obj2.add(obj1);
+    assertEquals("12345", obj3.toString());
+    assertEquals(5, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("12345", obj2.toString());
+    assertEquals(5, obj2.length());
+  }
+
+  @Test
+  public void addEmptyWithNonEmpty2() {
+    BigNumber obj1 = new BigNumberImpl("0");
+    BigNumber obj2 = new BigNumberImpl("12345");
+    BigNumber obj3;
+
+    obj3 = obj1.add(obj2);
+    assertEquals("12345", obj3.toString());
+    assertEquals(5, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("12345", obj2.toString());
+    assertEquals(5, obj2.length());
+
+    obj3 = obj2.add(obj1);
+    assertEquals("12345", obj3.toString());
+    assertEquals(5, obj3.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals(1, obj1.length());
+
+    assertEquals("12345", obj2.toString());
+    assertEquals(5, obj2.length());
+  }
+
+  @Test
+  public void addNonEmpty() {
+    BigNumber obj1 = new BigNumberImpl("123");
+    BigNumber obj2 = new BigNumberImpl("12345");
+    BigNumber obj3;
+
+    obj3 = obj1.add(obj2);
+    assertEquals("12468", obj3.toString());
+    assertEquals(5, obj3.length());
+
+    assertEquals("123", obj1.toString());
+    assertEquals(3, obj1.length());
+
+    assertEquals("12345", obj2.toString());
+    assertEquals(5, obj2.length());
+
+    obj3 = obj2.add(obj1);
+    assertEquals("12468", obj3.toString());
+    assertEquals(5, obj3.length());
+
+    assertEquals("123", obj1.toString());
+    assertEquals(3, obj1.length());
+
+    assertEquals("12345", obj2.toString());
+    assertEquals(5, obj2.length());
+  }
+
+  @Test
+  public void addNonEmptyFuzzy() {
+    for (int i = 0; i < 1000; i++) {
+      String str1 = generateRandomBigInteger();
+      String str2 = generateRandomBigInteger();
+      String sum;
+      BigNumber obj1 = new BigNumberImpl(str1);
+      BigNumber obj2 = new BigNumberImpl(str2);
+      BigNumber obj3;
+
+      if (str1.length() <= str2.length()) {
+        sum = sumOfTwoBigNumbers(str1, str2);
+      } else {
+        sum = sumOfTwoBigNumbers(str2, str1);
+      }
+
+      obj3 = obj1.add(obj2);
+      assertEquals(sum, obj3.toString());
+      assertEquals(sum.length(), obj3.length());
+
+      assertEquals(str1, obj1.toString());
+      assertEquals(str1.length(), obj1.length());
+
+      assertEquals(str2, obj2.toString());
+      assertEquals(str2.length(), obj2.length());
+
+      obj3 = obj2.add(obj1);
+      assertEquals(sum, obj3.toString());
+      assertEquals(sum.length(), obj3.length());
+
+      assertEquals(str1, obj1.toString());
+      assertEquals(str1.length(), obj1.length());
+
+      assertEquals(str2, obj2.toString());
+      assertEquals(str2.length(), obj2.length());
+    }
+  }
+
+  @Test
+  public void getPositionTestEmpty() {
+    BigNumber obj = new BigNumberImpl();
+    assertEquals(0, obj.getDigitAt(0));
+    assertEquals(0, obj.getDigitAt(0000));
+
+    try {
+      assertEquals(0, obj.getDigitAt(1));
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      assertEquals(0, obj.getDigitAt(-11));
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      assertEquals(0, obj.getDigitAt(-1));
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      assertEquals(0, obj.getDigitAt(1028));
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      assertEquals(0, obj.getDigitAt(01011));
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void getPositionTestEmpty2() {
+    BigNumber obj = new BigNumberImpl("0");
+    assertEquals(0, obj.getDigitAt(0));
+    assertEquals(0, obj.getDigitAt(0000));
+
+    try {
+      obj.getDigitAt(1);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(-11);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(-1);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(1028);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(01011);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void getPositionTestNonEmpty() {
+    BigNumber obj = new BigNumberImpl("123456");
+    assertEquals(6, obj.getDigitAt(0));
+    assertEquals(6, obj.getDigitAt(0000));
+    assertEquals(5, obj.getDigitAt(1));
+    assertEquals(4, obj.getDigitAt(2));
+    assertEquals(3, obj.getDigitAt(3));
+    assertEquals(2, obj.getDigitAt(4));
+    assertEquals(1, obj.getDigitAt(5));
+
+
+    try {
+      obj.getDigitAt(6);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(-11);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(-1);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(1028);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+    try {
+      obj.getDigitAt(01011);
+      fail("Expected exception did not occur");
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid position", e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void getPositionTestNonEmptyBigNumber() {
+    String str = generateRandomBigInteger();
+    StringBuilder strbld = new StringBuilder(str);
+    strbld.reverse();
+    BigNumber obj = new BigNumberImpl(str);
+    Random rand = new Random();
+
+    for (int i = 0; i < 1000; i++) {
+      int val = rand.nextInt(3000);
+
+      if(val < str.length()) {
+        assertEquals(Character.getNumericValue(strbld.charAt(val)), obj.getDigitAt(val));
+      } else {
+        try {
+          obj.getDigitAt(val);
+          fail("Expected exception did not occur");
+        } catch (IllegalArgumentException e) {
+          assertEquals("Invalid position", e.getMessage());
+        }
+      }
+    }
+  }
+
+  @Test
+  public void copyTest() {
+    BigNumber copy = obj2.copy();
+    copy.shiftLeft(2);
+    assertEquals("12300", copy.toString());
+    assertEquals("123", obj2.toString());
+  }
+
+  @Test
+  public void copyTestEmpty() {
+    BigNumber obj = new BigNumberImpl();
+    BigNumber copy = obj.copy();
+
+    assertEquals("0", copy.toString());
+    assertEquals(1, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.addDigit(2);
+    assertEquals("2", copy.toString());
+    assertEquals(1, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.shiftLeft(5);
+    assertEquals("200000", copy.toString());
+    assertEquals(6, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.shiftRight(3);
+    assertEquals("200", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.addDigit(3);
+    copy.addDigit(9);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.addDigit(3);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("3", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftLeft(3);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("3000", obj.toString());
+    assertEquals(4, obj.length());
+
+    obj.shiftRight(1);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("300", obj.toString());
+    assertEquals(3, obj.length());
+  }
+
+  @Test
+  public void copyTestEmpty2() {
+    BigNumber obj = new BigNumberImpl("0");
+    BigNumber copy = obj.copy();
+
+    assertEquals("0", copy.toString());
+    assertEquals(1, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.addDigit(2);
+    assertEquals("2", copy.toString());
+    assertEquals(1, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.shiftLeft(5);
+    assertEquals("200000", copy.toString());
+    assertEquals(6, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.shiftRight(3);
+    assertEquals("200", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    copy.addDigit(3);
+    copy.addDigit(9);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("0", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.addDigit(3);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("3", obj.toString());
+    assertEquals(1, obj.length());
+
+    obj.shiftLeft(3);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("3000", obj.toString());
+    assertEquals(4, obj.length());
+
+    obj.shiftRight(1);
+    assertEquals("212", copy.toString());
+    assertEquals(3, copy.length());
+
+    assertEquals("300", obj.toString());
+    assertEquals(3, obj.length());
+  }
+
+  @Test
+  public void copyTestEmpty3() {
+    BigNumber obj = new BigNumberImpl("1234567890");
+    BigNumber copy = obj.copy();
+
+    assertEquals("1234567890", copy.toString());
+    assertEquals(10, obj.length());
+
+    assertEquals("1234567890", obj.toString());
+    assertEquals(10, obj.length());
+
+    copy.addDigit(2);
+    assertEquals("1234567892", copy.toString());
+    assertEquals(10, copy.length());
+
+    assertEquals("1234567890", obj.toString());
+    assertEquals(10, obj.length());
+
+    copy.shiftLeft(5);
+    assertEquals("123456789200000", copy.toString());
+    assertEquals(15, copy.length());
+
+    assertEquals("1234567890", obj.toString());
+    assertEquals(10, obj.length());
+
+    copy.shiftRight(3);
+    assertEquals("123456789200", copy.toString());
+    assertEquals(12, copy.length());
+
+    assertEquals("1234567890", obj.toString());
+    assertEquals(10, obj.length());
+
+    copy.addDigit(3);
+    copy.addDigit(9);
+    assertEquals("123456789212", copy.toString());
+    assertEquals(12, copy.length());
+
+    assertEquals("1234567890", obj.toString());
+    assertEquals(10, obj.length());
+
+    obj.addDigit(3);
+    assertEquals("123456789212", copy.toString());
+    assertEquals(12, copy.length());
+
+    assertEquals("1234567893", obj.toString());
+    assertEquals(10, obj.length());
+
+    obj.shiftLeft(3);
+    assertEquals("123456789212", copy.toString());
+    assertEquals(12, copy.length());
+
+    assertEquals("1234567893000", obj.toString());
+    assertEquals(13, obj.length());
+
+    obj.shiftRight(1);
+    assertEquals("123456789212", copy.toString());
+    assertEquals(12, copy.length());
+
+    assertEquals("123456789300", obj.toString());
+    assertEquals(12, obj.length());
+  }
+
+  @Test
   public void compareToTest() {
     BigNumber one = new BigNumberImpl("999999999");
     BigNumber two = new BigNumberImpl("999999999");
@@ -727,6 +1263,89 @@ public class BigNumberImplTest {
     assertEquals(true, two.same(one));
     assertEquals(false, one.same(three));
     assertEquals(false, three.same(one));
+  }
+
+  @Test
+  public void compareToTestEmptyItself() {
+    BigNumber one = new BigNumberImpl();
+    assertEquals(true, one.same(one));
+  }
+
+  @Test
+  public void compareToTestEmptyItself2() {
+    BigNumber one = new BigNumberImpl("0");
+    assertEquals(true, one.same(one));
+  }
+
+  @Test
+  public void compareToTestNonEmptyItself() {
+    BigNumber one = new BigNumberImpl("23434545653421245678765");
+    assertEquals(true, one.same(one));
+  }
+
+  @Test
+  public void compareToTestEmptyToEmpty() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl();
+    assertEquals(true, one.same(two));
+    assertEquals(true, two.same(one));
+  }
+
+  @Test
+  public void compareToTestEmptyToNonEmpty1() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl("0");
+    assertEquals(true, one.same(two));
+    assertEquals(true, two.same(one));
+  }
+
+  @Test
+  public void compareToTestEmptyToNonEmpty2() {
+    BigNumber one = new BigNumberImpl();
+    BigNumber two = new BigNumberImpl("335443235");
+    assertEquals(false, one.same(two));
+    assertEquals(false, two.same(one));
+  }
+
+  @Test
+  public void compareToTestNonEmptySame() {
+    BigNumber one = new BigNumberImpl("2345643423");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(true, one.same(two));
+    assertEquals(true, two.same(one));
+  }
+
+  @Test
+  public void compareToTestNonEmptyDifferent1() {
+    BigNumber one = new BigNumberImpl("0");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(false, one.same(two));
+    assertEquals(false, two.same(one));
+  }
+
+  @Test
+  public void compareToTestNonEmptyDifferent2() {
+    BigNumber one = new BigNumberImpl("1243");
+    BigNumber two = new BigNumberImpl("2345643423");
+    assertEquals(false, one.same(two));
+    assertEquals(false, two.same(one));
+  }
+
+  @Test
+  public void compareToTestNonEmptyDifferentBigNumberSame() {
+    String str = generateRandomBigInteger();
+    BigNumber one = new BigNumberImpl(str);
+    BigNumber two = new BigNumberImpl(str);
+    assertEquals(true, one.same(two));
+    assertEquals(true, two.same(one));
+  }
+
+  @Test
+  public void compareToTestNonEmptyDifferentBigNumberDifferent() {
+    BigNumber one = new BigNumberImpl(generateRandomBigInteger());
+    BigNumber two = new BigNumberImpl(generateRandomBigInteger());
+    assertEquals(false, one.same(two));
+    assertEquals(false, two.same(one));
   }
 
   @Test
