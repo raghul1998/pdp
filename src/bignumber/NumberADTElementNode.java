@@ -2,10 +2,12 @@ package bignumber;
 
 public class NumberADTElementNode implements NumberADT {
   private final Number val;
+  private NumberADT prev;
   private NumberADT rest;
 
-  public NumberADTElementNode(Number num, NumberADT rest) {
+  public NumberADTElementNode(Number num, NumberADT prev, NumberADT rest) {
     this.val = num;
+    this.prev = prev;
     this.rest = rest;
   }
 
@@ -15,14 +17,16 @@ public class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public NumberADT addBack(Number num) {
-    this.rest = this.rest.addBack(num);
+  public NumberADT addBack(Number num, NumberADT prev) {
+    this.rest = this.rest.addBack(num, prev);
     return this.rest;
   }
 
   @Override
-  public NumberADT addFront(Number num) {
-    return new NumberADTElementNode(num, this);
+  public NumberADT addFront(Number num, NumberADT next) {
+    /*return new NumberADTElementNode(num, prev, next);*/
+    this.prev = this.prev.addFront(num, next);
+    return this.prev;
   }
 
   public String toString() {
@@ -43,9 +47,8 @@ public class NumberADTElementNode implements NumberADT {
     } else if (!isSingleDigit && length == 1) {
       tail = this.rest;
       return this.rest;
-    }
-    else {
-      this.rest = this.rest.removeAt(length-1, false, tail);
+    } else {
+      this.rest = this.rest.removeAt(length - 1, false, tail);
       return this;
     }
   }
@@ -55,7 +58,7 @@ public class NumberADTElementNode implements NumberADT {
     if (position == count) {
       return this.val.getValue();
     } else {
-      return this.rest.getAt(position, count-1);
+      return this.rest.getAt(position, count - 1);
     }
   }
 
@@ -75,8 +78,23 @@ public class NumberADTElementNode implements NumberADT {
   }
 
   @Override
+  public NumberADT prev() {
+    return this.prev;
+  }
+
+  @Override
   public void setNext(NumberADT node) {
     this.rest = node;
+  }
+
+  @Override
+  public int getValue() {
+    return this.val.getValue();
+  }
+
+  @Override
+  public void replace(int value) {
+    this.val.replaceValue(value);
   }
 
 }

@@ -3,9 +3,9 @@ package bignumber;
 public interface NumberADT {
   int count();
 
-  NumberADT addBack(Number num);
+  NumberADT addBack(Number num, NumberADT prev);
 
-  NumberADT addFront(Number num);
+  NumberADT addFront(Number num, NumberADT next);
 
   String toString();
 
@@ -20,4 +20,10 @@ public interface NumberADT {
   NumberADT next();
 
   void setNext(NumberADT node);
+
+  int getValue();
+
+  void replace(int value);
+
+  NumberADT prev();
 }

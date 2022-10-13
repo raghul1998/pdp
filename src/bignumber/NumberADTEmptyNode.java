@@ -7,13 +7,13 @@ public class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
-  public NumberADT addBack(Number num) {
-    return new NumberADTElementNode(num, this);
+  public NumberADT addBack(Number num, NumberADT prev) {
+    return new NumberADTElementNode(num, prev, this);
   }
 
   @Override
-  public NumberADT addFront(Number num) {
-    return new NumberADTElementNode(num, this);
+  public NumberADT addFront(Number num, NumberADT next) {
+    return new NumberADTElementNode(num, this, next);
   }
 
   public String toString() {
@@ -48,8 +48,41 @@ public class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
+  public NumberADT prev() {
+    return null;
+  }
+
+  @Override
   public void setNext(NumberADT node) {
     return;
   }
 
+  @Override
+  public int getValue() {
+    throw new IllegalArgumentException("Invalid Position");
+  }
+
+  @Override
+  public void replace(int value) {
+    throw new IllegalArgumentException("Invalid Position");
+  }
+
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof NumberADT)) {
+      return false;
+    }
+
+    if (this.next() == null && this.prev() == null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public int hashCode() {
+    return 0;
+  }
 }

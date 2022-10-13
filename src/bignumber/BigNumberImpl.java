@@ -9,7 +9,7 @@ public class BigNumberImpl implements BigNumber {
 
   public BigNumberImpl() {
     head = tail = new NumberADTEmptyNode();
-    head = tail = tail.addBack(new Number(0));
+    head = tail = tail.addBack(new Number(0), tail);
     this.count++;
   }
 
@@ -20,10 +20,10 @@ public class BigNumberImpl implements BigNumber {
 
     if (checkIfStringIsValid(number)) {
       head = tail = new NumberADTEmptyNode();
-      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(0))));
+      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(0))), tail);
       this.count++;
       for (int i = 1; i < number.length(); i++) {
-        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))));
+        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))), tail);
         this.count++;
       }
     } else {
@@ -40,7 +40,7 @@ public class BigNumberImpl implements BigNumber {
   public void shiftLeft(int shifts) {
     if ((shifts > 0) && (this.count > 1 || !this.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
-        tail = tail.addBack(new Number(0));
+        tail = tail.addBack(new Number(0), tail);
         this.count++;
       }
     } else if (shifts < 0) {
@@ -65,7 +65,7 @@ public class BigNumberImpl implements BigNumber {
         this.count = 1;
       } else {
         head = tail = new NumberADTEmptyNode();
-        head = tail = tail.addBack(new Number(0));
+        head = tail = tail.addBack(new Number(0), tail);
         this.count = 1;
       }
 
@@ -73,21 +73,42 @@ public class BigNumberImpl implements BigNumber {
       shiftLeft(shifts * -1);
     }
   }
-
+  
   @Override
   public void addDigit(int digit) throws IllegalArgumentException {
     if (digit < 0 || digit > 9) {
       throw new IllegalArgumentException("Digit should be a single non-negative value");
     }
     if (digit != 0) {
-      String result = sumOfTwoBigNumbers(Integer.toString(digit), this.toString());
-      int len = result.length();
-      head = tail = new NumberADTEmptyNode();
-      head = tail = tail.addBack(new Number(Character.getNumericValue(result.charAt(0))));
-      for (int i = 1; i < len; i++) {
-        tail = tail.addBack(new Number(Character.getNumericValue(result.charAt(i))));
+      NumberADT temp = tail;
+      int value;
+      int result;
+      int reminder;
+      boolean carry = false;
+
+      while (!Objects.equals(temp, new NumberADTEmptyNode())) {
+        value = temp.getValue();
+        if (!carry) {
+          result = value + digit;
+        } else {
+          result = value + 1;
+        }
+        if (result > 9) {
+          reminder = result - 10;
+          temp.replace(reminder);
+          temp = temp.prev();
+          carry = true;
+        } else {
+          temp.replace(result);
+          carry = false;
+          break;
+        }
       }
-      this.count = len;
+
+      if (carry) {
+        head = head.addFront(new Number(1), head);
+        this.count++;
+      }
     }
   }
 
@@ -174,7 +195,7 @@ public class BigNumberImpl implements BigNumber {
   }
 
   @Override
-  public int hashCode () {
+  public int hashCode() {
     return Long.hashCode(Long.parseLong(this.toString()));
   }
 
