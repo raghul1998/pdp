@@ -370,13 +370,14 @@ public class BigNumberImplTest {
         continue;
       }
 
-      obj.shiftLeft(val);
+      int shiftVal = random.nextInt(100);
+      obj.shiftLeft(shiftVal);
       if (isFirstDigit) {
         assertEquals("0", obj.toString());
         assertEquals(1, obj.length());
         str.append("0");
       } else {
-        str.append("0".repeat(val));
+        str.append("0".repeat(shiftVal));
         assertEquals(str.toString(), obj.toString());
         assertEquals(str.length(), obj.length());
       }
@@ -384,7 +385,7 @@ public class BigNumberImplTest {
       obj.addDigit(val);
 
       if (val != 0) {
-        str.replace(str.length() - 1, str.length(), Integer.toString(val));
+        str = new StringBuilder(sumOfTwoBigNumbers(String.valueOf(val), str.toString()));
       }
 
       assertEquals(str.toString(), obj.toString());
@@ -906,13 +907,7 @@ public class BigNumberImplTest {
     BigNumber obj = new BigNumberImpl();
     assertEquals(0, obj.getDigitAt(0));
     assertEquals(0, obj.getDigitAt(0000));
-
-    try {
-      assertEquals(0, obj.getDigitAt(1));
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
+    assertEquals(0, obj.getDigitAt(1));
 
     try {
       assertEquals(0, obj.getDigitAt(-11));
@@ -928,20 +923,8 @@ public class BigNumberImplTest {
       assertEquals("Invalid position", e.getMessage());
     }
 
-    try {
-      assertEquals(0, obj.getDigitAt(1028));
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
-
-    try {
-      assertEquals(0, obj.getDigitAt(01011));
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
-
+    assertEquals(0, obj.getDigitAt(1028));
+    assertEquals(0, obj.getDigitAt(01011));
   }
 
   @Test
@@ -950,12 +933,7 @@ public class BigNumberImplTest {
     assertEquals(0, obj.getDigitAt(0));
     assertEquals(0, obj.getDigitAt(0000));
 
-    try {
-      obj.getDigitAt(1);
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
+    assertEquals(0, obj.getDigitAt(1));
 
     try {
       obj.getDigitAt(-11);
@@ -971,20 +949,8 @@ public class BigNumberImplTest {
       assertEquals("Invalid position", e.getMessage());
     }
 
-    try {
-      obj.getDigitAt(1028);
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
-
-    try {
-      obj.getDigitAt(01011);
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
-
+    assertEquals(0, obj.getDigitAt(1028));
+    assertEquals(0, obj.getDigitAt(01011));
   }
 
   @Test
@@ -997,14 +963,10 @@ public class BigNumberImplTest {
     assertEquals(3, obj.getDigitAt(3));
     assertEquals(2, obj.getDigitAt(4));
     assertEquals(1, obj.getDigitAt(5));
-
-
-    try {
-      obj.getDigitAt(6);
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
+    assertEquals(0, obj.getDigitAt(6));
+    assertEquals(0, obj.getDigitAt(67));
+    assertEquals(0, obj.getDigitAt(060));
+    assertEquals(0, obj.getDigitAt(3348238));
 
     try {
       obj.getDigitAt(-11);
@@ -1019,21 +981,6 @@ public class BigNumberImplTest {
     } catch (IllegalArgumentException e) {
       assertEquals("Invalid position", e.getMessage());
     }
-
-    try {
-      obj.getDigitAt(1028);
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
-
-    try {
-      obj.getDigitAt(01011);
-      fail("Expected exception did not occur");
-    } catch (IllegalArgumentException e) {
-      assertEquals("Invalid position", e.getMessage());
-    }
-
   }
 
   @Test
@@ -1047,15 +994,10 @@ public class BigNumberImplTest {
     for (int i = 0; i < 1000; i++) {
       int val = rand.nextInt(3000);
 
-      if(val < str.length()) {
+      if (val < str.length()) {
         assertEquals(Character.getNumericValue(strbld.charAt(val)), obj.getDigitAt(val));
       } else {
-        try {
-          obj.getDigitAt(val);
-          fail("Expected exception did not occur");
-        } catch (IllegalArgumentException e) {
-          assertEquals("Invalid position", e.getMessage());
-        }
+        assertEquals(0, obj.getDigitAt(val));
       }
     }
   }

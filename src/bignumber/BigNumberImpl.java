@@ -51,16 +51,6 @@ public class BigNumberImpl implements BigNumber {
   @Override
   public void shiftRight(int shifts) {
     if (shifts > 0 && (this.count > 1 || !this.toString().equals("0"))) {
-      /*for (int i = 0; i < shifts; i++) {
-        head = head.removeAt(this.count, this.count > 1 ? false : true, tail);
-        this.count--;
-        // Break loop when we reach 0 number
-        if(this.count == 0) {
-          this.count++;
-          break;
-        }
-      }*/
-
       if (shifts < this.count - 1) {
         NumberADT temp = head;
         for (int i = 0; i < this.count - shifts - 1; i++) {
@@ -89,50 +79,26 @@ public class BigNumberImpl implements BigNumber {
     if (digit < 0 || digit > 9) {
       throw new IllegalArgumentException("Digit should be a single non-negative value");
     }
-
     if (digit != 0) {
-      StringBuilder value = new StringBuilder(this.toString());
-      int valueLength = value.length();
-      boolean carry = false;
-      int result;
-      int reminder;
-      for (int i = valueLength - 1; i >= 0; i--) {
-        int opr = Character.getNumericValue(value.charAt(i));
-        if (!carry) {
-          result = opr + digit;
-        } else {
-          result = opr + 1;
-        }
-        if (result > 9) {
-          carry = true;
-          reminder = result - 10;
-          //value.replace(i, i + 1, String.valueOf(reminder));
-          head.replaceAt(reminder, valueLength - i);
-        } else {
-          //value.replace(i, i + 1, String.valueOf(result));
-          head.replaceAt(result, valueLength - i);
-          carry = false;
-          break;
-        }
+      String result = sumOfTwoBigNumbers(Integer.toString(digit), this.toString());
+      int len = result.length();
+      head = tail = new NumberADTEmptyNode();
+      head = tail = tail.addBack(new Number(Character.getNumericValue(result.charAt(0))));
+      for (int i = 1; i < len; i++) {
+        tail = tail.addBack(new Number(Character.getNumericValue(result.charAt(i))));
       }
-      if (carry) {
-        //value.insert(0, 1);
-        head = this.head.addFront(new Number(1));
-        this.count++;
-      }
-      /*this.head = new NumberADTEmptyNode();
-      for(int i = 0; i < value.length(); i++) {
-        this.head = head.addBack(new Number(Character.getNumericValue(value.charAt(i))));
-      }*/
+      this.count = len;
     }
   }
 
   @Override
   public int getDigitAt(int position) throws IllegalArgumentException {
-    if (position < 0 || position >= this.length()) {
+    if (position < 0) {
       throw new IllegalArgumentException("Invalid position");
     }
-
+    if (position >= this.length()) {
+      return 0;
+    }
     return head.getAt(position + 1, count);
   }
 
