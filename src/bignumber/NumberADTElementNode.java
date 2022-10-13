@@ -1,6 +1,6 @@
 package bignumber;
 
-public class NumberADTElementNode implements NumberADT {
+class NumberADTElementNode implements NumberADT {
   private final Number val;
   private NumberADT prev;
   private NumberADT rest;
@@ -24,15 +24,16 @@ public class NumberADTElementNode implements NumberADT {
 
   @Override
   public NumberADT addFront(Number num, NumberADT next) {
-    /*return new NumberADTElementNode(num, prev, next);*/
     this.prev = this.prev.addFront(num, next);
     return this.prev;
   }
 
+  @Override
   public String toString() {
     return toStringHelper(new StringBuilder());
   }
 
+  @Override
   public String toStringHelper(StringBuilder acc) {
     return this.rest.toStringHelper(acc.append(this.val.toString()));
   }

@@ -1,6 +1,6 @@
 package bignumber;
 
-public class Number {
+class Number {
   private int value;
 
   public Number(int number) {

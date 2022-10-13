@@ -1,6 +1,6 @@
 package bignumber;
 
-public class NumberADTEmptyNode implements NumberADT {
+class NumberADTEmptyNode implements NumberADT {
   @Override
   public int count() {
     return 0;
@@ -16,6 +16,7 @@ public class NumberADTEmptyNode implements NumberADT {
     return new NumberADTElementNode(num, this, next);
   }
 
+  @Override
   public String toString() {
     return "";
   }
@@ -67,6 +68,7 @@ public class NumberADTEmptyNode implements NumberADT {
     throw new IllegalArgumentException("Invalid Position");
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;
@@ -82,7 +84,8 @@ public class NumberADTEmptyNode implements NumberADT {
     }
   }
 
+  @Override
   public int hashCode() {
-    return 0;
+    return super.hashCode();
   }
 }
