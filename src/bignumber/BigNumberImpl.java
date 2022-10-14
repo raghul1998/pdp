@@ -2,17 +2,38 @@ package bignumber;
 
 import java.util.Objects;
 
+/**
+ * This class represents the BigNumber.
+ * This class implements the BigNumber interface and the operations on the BigNumber.
+ * This class has the following variables.
+ * <ul>
+ *  <li> head - head pointer for the BigNumber </li>
+ *  <li> tail - tail pointer for the BigNumber </li>
+ *  <li> count - an integer variable that holds the length of the BigNumber </li>
+ * </ul>
+ */
 public class BigNumberImpl implements BigNumber {
   private NumberADT head;
   private NumberADT tail;
   private int count;
 
+  /**
+   * Constructor for the Big Number class that takes in no arguments and creates a new BigNumber
+   * that is initialized to 0.
+   */
   public BigNumberImpl() {
     head = tail = new NumberADTEmptyNode();
     head = tail = tail.addBack(new Number(0), tail);
     this.count++;
   }
 
+  /**
+   * Constructor for the Big Number class that takes in a string as an argument that represents the
+   * big number that needs to be created.
+   *
+   * @param number the big number that needs to be created
+   * @throws IllegalArgumentException if the number is invalid
+   */
   public BigNumberImpl(String number) throws IllegalArgumentException {
     if (number == null || number.equals("")) {
       throw new IllegalArgumentException("Null or Empty String");
@@ -73,7 +94,7 @@ public class BigNumberImpl implements BigNumber {
       shiftLeft(shifts * -1);
     }
   }
-  
+
   @Override
   public void addDigit(int digit) throws IllegalArgumentException {
     if (digit < 0 || digit > 9) {
@@ -148,6 +169,14 @@ public class BigNumberImpl implements BigNumber {
     return result == 0;
   }
 
+  /**
+   * This method compares two BigNumbers for ordering.
+   * This using the Comparable interface.
+   *
+   * @param obj the object to be compared
+   * @return 0 if both big numbers are same, else returns a positive number if this object is
+   * greater, else returns a negative number if this object is smaller
+   */
   @Override
   public int compareTo(BigNumber obj) {
     if (this == obj) {
@@ -176,10 +205,22 @@ public class BigNumberImpl implements BigNumber {
     }
   }
 
+  /**
+   * Override the toString function in this class to return the big number as a string.
+   *
+   * @return the BigNumber as string
+   */
   public String toString() {
     return this.head.toString();
   }
 
+  /**
+   * This method determines if two Big Numbers are same.
+   * Overrides the equals function.
+   *
+   * @param obj big number to be compared to
+   * @return true if both are same, else false
+   */
   @Override
   public final boolean equals(Object obj) {
     if (this == obj) {
@@ -194,11 +235,22 @@ public class BigNumberImpl implements BigNumber {
     return Objects.equals(this.toString(), num.toString());
   }
 
+  /**
+   * Override hashCode as the equals method was overridden.
+   *
+   * @return the long format of the big number
+   */
   @Override
   public int hashCode() {
     return Long.hashCode(Long.parseLong(this.toString()));
   }
 
+  /**
+   * A helper method to check if the given number if a valid number or not.
+   *
+   * @param num big number that needs to be validated
+   * @return true if the number is valid, else false
+   */
   private boolean checkIfStringIsValid(String num) {
     boolean result = true;
     for (int i = 0; i < num.length(); i++) {
@@ -213,6 +265,13 @@ public class BigNumberImpl implements BigNumber {
     return result;
   }
 
+  /**
+   * A helper function that adds two numbers and returns the result.
+   *
+   * @param opr1 string format of the first big number
+   * @param opr2 string format of the second big number
+   * @return returns the result of the addition as a string
+   */
   private String sumOfTwoBigNumbers(String opr1, String opr2) {
     StringBuilder result = new StringBuilder();
 
