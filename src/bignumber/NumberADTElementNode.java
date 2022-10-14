@@ -1,10 +1,26 @@
 package bignumber;
 
+/**
+ * This is a package private class that represents an element node. This class implements the
+ * NumberADT interface. This class has the following variables.
+ * <ul>
+ *   <li> val - value of the node </li>
+ *   <li> prev - previous node of this node </li>
+ *   <li> rest - next node of this node </li>
+ * </ul>
+ */
 class NumberADTElementNode implements NumberADT {
   private final Number val;
   private NumberADT prev;
   private NumberADT rest;
 
+  /**
+   * Constructs a new element node with the given value and set its previous and next node.
+   *
+   * @param num  value of the node
+   * @param prev previous to this new node
+   * @param rest rest of this new node
+   */
   public NumberADTElementNode(Number num, NumberADT prev, NumberADT rest) {
     this.val = num;
     this.prev = prev;
@@ -39,37 +55,11 @@ class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public NumberADT removeAt(int length, boolean isSingleDigit, NumberADT tail) {
-    if (isSingleDigit && length == 1 && this.val.getValue() != 0) {
-      this.val.replaceValue(0);
-      return this;
-    } else if (isSingleDigit && length == 1 && this.val.getValue() == 0) {
-      return this;
-    } else if (!isSingleDigit && length == 1) {
-      tail = this.rest;
-      return tail;
-    } else {
-      this.rest = this.rest.removeAt(length - 1, false, tail);
-      return this;
-    }
-  }
-
-  @Override
   public int getAt(int position, int count) {
     if (position == count) {
       return this.val.getValue();
     } else {
       return this.rest.getAt(position, count - 1);
-    }
-  }
-
-  @Override
-  public NumberADT replaceAt(int value, int position) {
-    if (position == this.count()) {
-      this.val.replaceValue(value);
-      return this;
-    } else {
-      return this.rest.replaceAt(value, position);
     }
   }
 

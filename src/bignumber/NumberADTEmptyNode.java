@@ -1,5 +1,9 @@
 package bignumber;
 
+/**
+ * This is a package private class that represents an empty node. This class implements the
+ * NumberADT interface.
+ */
 class NumberADTEmptyNode implements NumberADT {
   @Override
   public int count() {
@@ -27,19 +31,7 @@ class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
-  public NumberADT removeAt(int length, boolean isSingleDigit, NumberADT tail) {
-    // Cannot remove anything from empty node
-    return this;
-  }
-
-  @Override
   public int getAt(int position, int count) throws IllegalArgumentException {
-    throw new IllegalArgumentException("Invalid Position");
-  }
-
-  @Override
-  public NumberADT replaceAt(int value, int position) {
-    // Nothing to replace
     throw new IllegalArgumentException("Invalid Position");
   }
 
@@ -55,6 +47,7 @@ class NumberADTEmptyNode implements NumberADT {
 
   @Override
   public void setNext(NumberADT node) {
+    throw new IllegalArgumentException("Invalid Position");
   }
 
   @Override

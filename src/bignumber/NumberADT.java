@@ -14,7 +14,7 @@ public interface NumberADT {
   /**
    * Adds a node to at the end of the list.
    *
-   * @param num the node to be added
+   * @param num  the node to be added
    * @param prev represents the previous node
    * @return the new node
    */
@@ -23,7 +23,7 @@ public interface NumberADT {
   /**
    * Adds a node at the front of the list.
    *
-   * @param num the node to be added
+   * @param num  the node to be added
    * @param next represents the next node
    * @return the new node
    */
@@ -44,19 +44,51 @@ public interface NumberADT {
    */
   String toStringHelper(StringBuilder acc);
 
-  NumberADT removeAt(int length, boolean isSingleDigit, NumberADT tail);
+  /**
+   * This method returns the value of the node at a given position.
+   *
+   * @param position position at which the value needs to be known
+   * @param count    length of the list
+   * @return the value of the node as an integer
+   * @throws IllegalArgumentException if it is an empty node
+   */
+  int getAt(int position, int count) throws IllegalArgumentException;
 
-  int getAt(int position, int count);
+  /**
+   * This method returns the previous node of the given node.
+   *
+   * @return the previous node as NumberADT object
+   */
+  NumberADT prev();
 
-  NumberADT replaceAt(int value, int position);
-
+  /**
+   * This method returns the next node of the given node.
+   *
+   * @return the next node as NumberADT object
+   */
   NumberADT next();
 
-  void setNext(NumberADT node);
+  /**
+   * This method set the given node to the next of this node.
+   *
+   * @param node node to be set as next of this node
+   * @throws IllegalArgumentException if it is an empty node
+   */
+  void setNext(NumberADT node) throws IllegalArgumentException;
 
-  int getValue();
+  /**
+   * A method that returns the value of the node.
+   *
+   * @return the value of the node as an integer
+   * @throws IllegalArgumentException if it is an empty node
+   */
+  int getValue() throws IllegalArgumentException;
 
-  void replace(int value);
-
-  NumberADT prev();
+  /**
+   * This method replaces the given nodes value with a given value.
+   *
+   * @param value value to be replaced
+   * @throws IllegalArgumentException if it is an empty node
+   */
+  void replace(int value) throws IllegalArgumentException;
 }
