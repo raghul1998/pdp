@@ -6,9 +6,10 @@ package bignumber;
  */
 public interface BigNumber extends Comparable<BigNumber> {
   /**
-   * This method returns the length of the BigNumber.
+   * This method length that returns the number of digits in this number.
+   * This method basically helps to find the length of the big number.
    *
-   * @return returns the length as an integer
+   * @return the length as an integer
    */
   int length();
 
@@ -52,7 +53,8 @@ public interface BigNumber extends Comparable<BigNumber> {
   int getDigitAt(int position) throws IllegalArgumentException;
 
   /**
-   * This method returns an identical and independent copy of this number.
+   * This method helps to get an identical and independent copy of this number. Modifying the
+   * return object will not modify the current object.
    *
    * @return the copy of the number as a BigNumber object
    */
@@ -68,10 +70,13 @@ public interface BigNumber extends Comparable<BigNumber> {
   BigNumber add(BigNumber num);
 
   /**
-   * A method that determines if two BigNumbers are same or not.
+   * This method compares two BigNumbers for ordering. This method overrides the
+   * comparable interface.
    *
-   * @param num the BigNumber to be compared to
-   * @return true both are same, else false
+   * @param num the object to be compared
+   * @return 0 if both big numbers are same, else returns a positive number if this object is
+   *         greater, else returns a negative number if this object is smaller
    */
-  boolean same(BigNumber num);
+  int compareTo(BigNumber num);
+
 }

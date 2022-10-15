@@ -164,20 +164,6 @@ public class BigNumberImpl implements BigNumber {
   }
 
   @Override
-  public boolean same(BigNumber num) {
-    int result = this.compareTo(num);
-    return result == 0;
-  }
-
-  /**
-   * This method compares two BigNumbers for ordering.
-   * This using the Comparable interface.
-   *
-   * @param obj the object to be compared
-   * @return 0 if both big numbers are same, else returns a positive number if this object is
-   * greater, else returns a negative number if this object is smaller
-   */
-  @Override
   public int compareTo(BigNumber obj) {
     if (this == obj) {
       return 0;
@@ -222,7 +208,7 @@ public class BigNumberImpl implements BigNumber {
    * @return true if both are same, else false
    */
   @Override
-  public final boolean equals(Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }

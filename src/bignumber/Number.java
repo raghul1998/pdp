@@ -29,7 +29,7 @@ class Number {
   }
 
   /**
-   * This method returns the value of the number.
+   * This method helps to retrieve the integer value of the given number node.
    *
    * @return value of the number as an integer.
    */

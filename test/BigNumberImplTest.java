@@ -6,14 +6,20 @@ import java.util.Random;
 import bignumber.BigNumber;
 import bignumber.BigNumberImpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+/**
+ * A JUnit test class for the RegularManualTransmissionTest class.
+ */
 public class BigNumberImplTest {
   private BigNumber obj;
   private BigNumber obj2;
-
   private BigNumber obj3;
 
+  /**
+   * Initializes the test variables.
+   */
   @Before
   public void setup() {
     obj = new BigNumberImpl();
@@ -21,6 +27,9 @@ public class BigNumberImplTest {
     obj3 = new BigNumberImpl("0");
   }
 
+  /**
+   * A JUnit test case to test the constructor with invalid inputs.
+   */
   @Test
   public void testConstructor() {
     try {
@@ -59,6 +68,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify the length of the big number.
+   */
   @Test
   public void lengthTest() {
     assertEquals(1, obj.length());
@@ -77,6 +89,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify the string value of the big number.
+   */
   @Test
   public void toStringTest() {
     assertEquals("0", obj.toString());
@@ -95,6 +110,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify the shifts of the big number.
+   */
   @Test
   public void shiftTestGeneral() {
     assertEquals(1, obj.length());
@@ -167,6 +185,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift on the empty big number.
+   */
   @Test
   public void leftShiftTestEmpty() {
     BigNumber obj = new BigNumberImpl();
@@ -190,6 +211,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift on the non-empty big number.
+   */
   @Test
   public void leftShiftTestEmpty2() {
     BigNumber obj = new BigNumberImpl("0");
@@ -213,6 +237,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift by negative value.
+   */
   @Test
   public void leftShiftTestEmptyNegative() {
     BigNumber obj = new BigNumberImpl();
@@ -236,6 +263,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift on negative value on non-empty object.
+   */
   @Test
   public void leftShiftTestEmptyNegative2() {
     BigNumber obj = new BigNumberImpl("0");
@@ -259,6 +289,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift by one.
+   */
   @Test
   public void leftShiftTestNumberByOne() {
     String str = generateRandomBigInteger();
@@ -276,6 +309,9 @@ public class BigNumberImplTest {
     assertEquals(str.length(), obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift by a random value.
+   */
   @Test
   public void leftShiftTestNumberByRandom() {
     Random random = new Random();
@@ -297,6 +333,9 @@ public class BigNumberImplTest {
     assertEquals(str.length(), obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the left shift by random negative number.
+   */
   @Test
   public void leftShiftTestNumberByRandomNegative() {
     Random random = new Random();
@@ -322,6 +361,9 @@ public class BigNumberImplTest {
   }
 
 
+  /**
+   * A JUnit test case to verify creation of number by left shifting on 1.
+   */
   @Test
   public void leftShiftNumberCreationByOne() {
     Random random = new Random();
@@ -355,6 +397,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify creation of number by left shifting on random number.
+   */
   @Test
   public void leftShiftNumberCreationByRandom() {
     Random random = new Random();
@@ -394,6 +439,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify right shift on empty number.
+   */
   @Test
   public void leftRightTestEmpty() {
     BigNumber obj = new BigNumberImpl();
@@ -417,6 +465,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify right shift by 1.
+   */
   @Test
   public void leftRightTestNumberByOne() {
     StringBuilder str = new StringBuilder(generateRandomBigInteger());
@@ -434,6 +485,9 @@ public class BigNumberImplTest {
     assertEquals(str.length(), obj.length());
   }
 
+  /**
+   * A JUnit test case to verify right shift on random value.
+   */
   @Test
   public void leftRightTestNumberByRandom() {
     Random random = new Random();
@@ -458,6 +512,9 @@ public class BigNumberImplTest {
     assertEquals(str.length(), obj.length());
   }
 
+  /**
+   * A JUnit test case to verify right shift on negative value.
+   */
   @Test
   public void leftRightTestNumberByRandomNegative() {
     Random random = new Random();
@@ -479,6 +536,9 @@ public class BigNumberImplTest {
     assertEquals(str.length(), obj.length());
   }
 
+  /**
+   * A JUnit test case to add digit.
+   */
   @Test
   public void addDigitTestInitial() {
     BigNumber obj1 = new BigNumberImpl();
@@ -579,6 +639,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj3.length());
   }
 
+  /**
+   * A JUnit test case to add digit along with shifts.
+   */
   @Test
   public void addDigitTestGenericWithShift() {
     BigNumber obj1 = new BigNumberImpl();
@@ -677,6 +740,9 @@ public class BigNumberImplTest {
     assertEquals(3, obj3.length());
   }
 
+  /**
+   * A JUnit test case to verify add digits using fuzzy testing.
+   */
   @Test
   public void addDigitFuzzy() {
     String str = generateRandomBigInteger();
@@ -692,6 +758,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify adding two digits.
+   */
   @Test
   public void addTest() {
     BigNumber one = new BigNumberImpl("123456");
@@ -702,6 +771,9 @@ public class BigNumberImplTest {
     assertEquals("1000123455", result.toString());
   }
 
+  /**
+   * A JUnit test case to verify adding empty numbers.
+   */
   @Test
   public void addEmptyObject() {
     BigNumber obj1 = new BigNumberImpl();
@@ -729,6 +801,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify adding empty objects.
+   */
   @Test
   public void addEmptyObject2() {
     BigNumber obj1 = new BigNumberImpl();
@@ -756,6 +831,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify adding empty objects.
+   */
   @Test
   public void addEmptyObject3() {
     BigNumber obj1 = new BigNumberImpl("0");
@@ -783,6 +861,9 @@ public class BigNumberImplTest {
     assertEquals(1, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify adding non-empty numbers.
+   */
   @Test
   public void addEmptyWithNonEmpty1() {
     BigNumber obj1 = new BigNumberImpl();
@@ -810,6 +891,9 @@ public class BigNumberImplTest {
     assertEquals(5, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify adding non-empty numbers.
+   */
   @Test
   public void addEmptyWithNonEmpty2() {
     BigNumber obj1 = new BigNumberImpl("0");
@@ -837,6 +921,9 @@ public class BigNumberImplTest {
     assertEquals(5, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify adding non-empty numbers.
+   */
   @Test
   public void addNonEmpty() {
     BigNumber obj1 = new BigNumberImpl("123");
@@ -864,6 +951,9 @@ public class BigNumberImplTest {
     assertEquals(5, obj2.length());
   }
 
+  /**
+   * A JUnit test case to verify adding non-empty numbers using fuzzy testing.
+   */
   @Test
   public void addNonEmptyFuzzy() {
     for (int i = 0; i < 1000; i++) {
@@ -902,6 +992,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify the get position on empty numbers.
+   */
   @Test
   public void getPositionTestEmpty() {
     BigNumber obj = new BigNumberImpl();
@@ -927,6 +1020,9 @@ public class BigNumberImplTest {
     assertEquals(0, obj.getDigitAt(01011));
   }
 
+  /**
+   * A JUnit test case to verify the get position on empty numbers.
+   */
   @Test
   public void getPositionTestEmpty2() {
     BigNumber obj = new BigNumberImpl("0");
@@ -953,6 +1049,9 @@ public class BigNumberImplTest {
     assertEquals(0, obj.getDigitAt(01011));
   }
 
+  /**
+   * A JUnit test case to verify the get position on numbers.
+   */
   @Test
   public void getPositionTestNonEmpty() {
     BigNumber obj = new BigNumberImpl("123456");
@@ -983,6 +1082,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify the get position on numbers.
+   */
   @Test
   public void getPositionTestNonEmptyBigNumber() {
     String str = generateRandomBigInteger();
@@ -1002,6 +1104,9 @@ public class BigNumberImplTest {
     }
   }
 
+  /**
+   * A JUnit test case to verify the copy function.
+   */
   @Test
   public void copyTest() {
     BigNumber copy = obj2.copy();
@@ -1010,6 +1115,9 @@ public class BigNumberImplTest {
     assertEquals("123", obj2.toString());
   }
 
+  /**
+   * A JUnit test case to verify the copy function on empty number.
+   */
   @Test
   public void copyTestEmpty() {
     BigNumber obj = new BigNumberImpl();
@@ -1072,6 +1180,9 @@ public class BigNumberImplTest {
     assertEquals(3, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the copy function on empty number.
+   */
   @Test
   public void copyTestEmpty2() {
     BigNumber obj = new BigNumberImpl("0");
@@ -1134,6 +1245,9 @@ public class BigNumberImplTest {
     assertEquals(3, obj.length());
   }
 
+  /**
+   * A JUnit test case to verify the copy function on empty number.
+   */
   @Test
   public void copyTestEmpty3() {
     BigNumber obj = new BigNumberImpl("1234567890");
@@ -1196,100 +1310,9 @@ public class BigNumberImplTest {
     assertEquals(12, obj.length());
   }
 
-  @Test
-  public void compareToTest() {
-    BigNumber one = new BigNumberImpl("999999999");
-    BigNumber two = new BigNumberImpl("999999999");
-    BigNumber three = new BigNumberImpl("12345");
-    assertEquals(true, one.same(two));
-    assertEquals(true, two.same(one));
-    assertEquals(false, one.same(three));
-    assertEquals(false, three.same(one));
-  }
-
-  @Test
-  public void compareToTestEmptyItself() {
-    BigNumber one = new BigNumberImpl();
-    assertEquals(true, one.same(one));
-  }
-
-  @Test
-  public void compareToTestEmptyItself2() {
-    BigNumber one = new BigNumberImpl("0");
-    assertEquals(true, one.same(one));
-  }
-
-  @Test
-  public void compareToTestNonEmptyItself() {
-    BigNumber one = new BigNumberImpl("23434545653421245678765");
-    assertEquals(true, one.same(one));
-  }
-
-  @Test
-  public void compareToTestEmptyToEmpty() {
-    BigNumber one = new BigNumberImpl();
-    BigNumber two = new BigNumberImpl();
-    assertEquals(true, one.same(two));
-    assertEquals(true, two.same(one));
-  }
-
-  @Test
-  public void compareToTestEmptyToNonEmpty1() {
-    BigNumber one = new BigNumberImpl();
-    BigNumber two = new BigNumberImpl("0");
-    assertEquals(true, one.same(two));
-    assertEquals(true, two.same(one));
-  }
-
-  @Test
-  public void compareToTestEmptyToNonEmpty2() {
-    BigNumber one = new BigNumberImpl();
-    BigNumber two = new BigNumberImpl("335443235");
-    assertEquals(false, one.same(two));
-    assertEquals(false, two.same(one));
-  }
-
-  @Test
-  public void compareToTestNonEmptySame() {
-    BigNumber one = new BigNumberImpl("2345643423");
-    BigNumber two = new BigNumberImpl("2345643423");
-    assertEquals(true, one.same(two));
-    assertEquals(true, two.same(one));
-  }
-
-  @Test
-  public void compareToTestNonEmptyDifferent1() {
-    BigNumber one = new BigNumberImpl("0");
-    BigNumber two = new BigNumberImpl("2345643423");
-    assertEquals(false, one.same(two));
-    assertEquals(false, two.same(one));
-  }
-
-  @Test
-  public void compareToTestNonEmptyDifferent2() {
-    BigNumber one = new BigNumberImpl("1243");
-    BigNumber two = new BigNumberImpl("2345643423");
-    assertEquals(false, one.same(two));
-    assertEquals(false, two.same(one));
-  }
-
-  @Test
-  public void compareToTestNonEmptyDifferentBigNumberSame() {
-    String str = generateRandomBigInteger();
-    BigNumber one = new BigNumberImpl(str);
-    BigNumber two = new BigNumberImpl(str);
-    assertEquals(true, one.same(two));
-    assertEquals(true, two.same(one));
-  }
-
-  @Test
-  public void compareToTestNonEmptyDifferentBigNumberDifferent() {
-    BigNumber one = new BigNumberImpl(generateRandomBigInteger());
-    BigNumber two = new BigNumberImpl(generateRandomBigInteger());
-    assertEquals(false, one.same(two));
-    assertEquals(false, two.same(one));
-  }
-
+  /**
+   * A JUnit test case to verify the ordering functionality.
+   */
   @Test
   public void orderingEmpty() {
     BigNumber one = new BigNumberImpl();
@@ -1298,24 +1321,36 @@ public class BigNumberImplTest {
     assertEquals(0, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on empty objects.
+   */
   @Test
   public void orderingTestEmptyItself() {
     BigNumber one = new BigNumberImpl();
     assertEquals(0, one.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on empty objects.
+   */
   @Test
   public void orderingTestEmptyItself2() {
     BigNumber one = new BigNumberImpl("0");
     assertEquals(0, one.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on empty objects.
+   */
   @Test
   public void orderingTestEmptyItself3() {
     BigNumber one = new BigNumberImpl("23434545653421245678765");
     assertEquals(0, one.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on empty objects.
+   */
   @Test
   public void orderingTestEmptyToEmpty() {
     BigNumber one = new BigNumberImpl();
@@ -1324,6 +1359,9 @@ public class BigNumberImplTest {
     assertEquals(0, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on empty objects.
+   */
   @Test
   public void orderingTestEmptyToEmpty1() {
     BigNumber one = new BigNumberImpl();
@@ -1332,6 +1370,9 @@ public class BigNumberImplTest {
     assertEquals(0, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on empty objects.
+   */
   @Test
   public void orderingToTestEmptyToNonEmpty2() {
     BigNumber one = new BigNumberImpl();
@@ -1340,6 +1381,9 @@ public class BigNumberImplTest {
     assertEquals(1, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on big numbers.
+   */
   @Test
   public void orderingToTestNonEmptySame() {
     BigNumber one = new BigNumberImpl("2345643423");
@@ -1348,6 +1392,9 @@ public class BigNumberImplTest {
     assertEquals(0, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on big numbers.
+   */
   @Test
   public void orderingToTestNonEmptyDifferent1() {
     BigNumber one = new BigNumberImpl("0");
@@ -1356,6 +1403,9 @@ public class BigNumberImplTest {
     assertEquals(1, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on big numbers.
+   */
   @Test
   public void orderingTestNonEmptyDifferent2() {
     BigNumber one = new BigNumberImpl("1243");
@@ -1364,6 +1414,9 @@ public class BigNumberImplTest {
     assertEquals(1, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on big numbers.
+   */
   @Test
   public void orderingToTestNonEmptyDifferentBigNumberSame() {
     String str = generateRandomBigInteger();
@@ -1373,6 +1426,9 @@ public class BigNumberImplTest {
     assertEquals(0, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the ordering functionality on big numbers.
+   */
   @Test
   public void orderingTestNonEmptyDifferentBigNumberDifferent() {
     String val1 = generateRandomBigInteger();
@@ -1404,6 +1460,9 @@ public class BigNumberImplTest {
     assertEquals(expected * -1, two.compareTo(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality.
+   */
   @Test
   public void equalsEmpty() {
     BigNumber one = new BigNumberImpl();
@@ -1414,24 +1473,36 @@ public class BigNumberImplTest {
     assertEquals(false, one.equals(""));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on empty numbers.
+   */
   @Test
   public void equalsTestEmptyItself() {
     BigNumber one = new BigNumberImpl();
     assertEquals(true, one.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on empty numbers.
+   */
   @Test
   public void equalsTestEmptyItself2() {
     BigNumber one = new BigNumberImpl("0");
     assertEquals(true, one.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on empty numbers.
+   */
   @Test
   public void equalsTestEmptyItself3() {
     BigNumber one = new BigNumberImpl("23434545653421245678765");
     assertEquals(true, one.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on empty numbers.
+   */
   @Test
   public void equalsTestEmptyToEmpty() {
     BigNumber one = new BigNumberImpl();
@@ -1440,6 +1511,9 @@ public class BigNumberImplTest {
     assertEquals(true, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on empty numbers.
+   */
   @Test
   public void equalsTestEmptyToEmpty1() {
     BigNumber one = new BigNumberImpl();
@@ -1448,6 +1522,9 @@ public class BigNumberImplTest {
     assertEquals(true, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on numbers.
+   */
   @Test
   public void equalsToTestEmptyToNonEmpty2() {
     BigNumber one = new BigNumberImpl();
@@ -1456,6 +1533,9 @@ public class BigNumberImplTest {
     assertEquals(false, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on numbers.
+   */
   @Test
   public void equalsToTestNonEmptySame() {
     BigNumber one = new BigNumberImpl("2345643423");
@@ -1464,6 +1544,9 @@ public class BigNumberImplTest {
     assertEquals(true, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on numbers.
+   */
   @Test
   public void equalsToTestNonEmptyDifferent1() {
     BigNumber one = new BigNumberImpl("0");
@@ -1472,6 +1555,9 @@ public class BigNumberImplTest {
     assertEquals(false, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on numbers.
+   */
   @Test
   public void equalsTestNonEmptyDifferent2() {
     BigNumber one = new BigNumberImpl("1243");
@@ -1480,6 +1566,9 @@ public class BigNumberImplTest {
     assertEquals(false, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on numbers.
+   */
   @Test
   public void equalsToTestNonEmptyDifferentBigNumberSame() {
     String str = generateRandomBigInteger();
@@ -1489,6 +1578,9 @@ public class BigNumberImplTest {
     assertEquals(true, two.equals(one));
   }
 
+  /**
+   * A JUnit test case to verify the equals' functionality on numbers.
+   */
   @Test
   public void equalsTestNonEmptyDifferentBigNumberDifferent() {
     String val1 = generateRandomBigInteger();
@@ -1502,15 +1594,11 @@ public class BigNumberImplTest {
     assertEquals(expected, two.equals(one));
   }
 
-  @Test
-  public void Test() {
-    BigNumber obj = new BigNumberImpl("9");
-
-    obj.addDigit(1);
-    assertEquals("10", obj.toString());
-    assertEquals(2, obj.length());
-  }
-
+  /**
+   * A helper function to generate a random number.
+   *
+   * @return the random integer as a string
+   */
   private String generateRandomInteger() {
     Random random = new Random();
     StringBuilder str = new StringBuilder();
@@ -1534,6 +1622,11 @@ public class BigNumberImplTest {
     return str.toString();
   }
 
+  /**
+   * A helper function to generate a random big number.
+   *
+   * @return the big number as a string
+   */
   private String generateRandomBigInteger() {
     Random random = new Random();
     StringBuilder str = new StringBuilder();
@@ -1553,6 +1646,13 @@ public class BigNumberImplTest {
     return str.toString();
   }
 
+  /**
+   * A helper function that helps in calculating sum of two big numbers.
+   *
+   * @param opr1 first big number as a string
+   * @param opr2 second big number as a string
+   * @return result as a string
+   */
   private String sumOfTwoBigNumbers(String opr1, String opr2) {
     StringBuilder result = new StringBuilder();
 
