@@ -71,7 +71,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify the length of the big number.
    */
-  @Test
+  @Test(timeout = 5000)
   public void lengthTest() {
     assertEquals(1, obj.length());
     assertEquals(3, obj2.length());
@@ -92,7 +92,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify the string value of the big number.
    */
-  @Test
+  @Test(timeout = 5000)
   public void toStringTest() {
     assertEquals("0", obj.toString());
     assertEquals("123", obj2.toString());
@@ -292,7 +292,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify the left shift by one.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftShiftTestNumberByOne() {
     String str = generateRandomBigInteger();
     BigNumber obj = new BigNumberImpl(str);
@@ -312,7 +312,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify the left shift by a random value.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftShiftTestNumberByRandom() {
     Random random = new Random();
     String str = generateRandomInteger();
@@ -336,7 +336,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify the left shift by random negative number.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftShiftTestNumberByRandomNegative() {
     Random random = new Random();
     StringBuilder str = new StringBuilder(generateRandomBigInteger());
@@ -364,7 +364,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify creation of number by left shifting on 1.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftShiftNumberCreationByOne() {
     Random random = new Random();
     BigNumber obj = new BigNumberImpl();
@@ -400,7 +400,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify creation of number by left shifting on random number.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftShiftNumberCreationByRandom() {
     Random random = new Random();
     BigNumber obj = new BigNumberImpl();
@@ -468,7 +468,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify right shift by 1.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftRightTestNumberByOne() {
     StringBuilder str = new StringBuilder(generateRandomBigInteger());
     BigNumber obj = new BigNumberImpl(str.toString());
@@ -488,7 +488,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify right shift on random value.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftRightTestNumberByRandom() {
     Random random = new Random();
     StringBuilder str = new StringBuilder(generateRandomBigInteger());
@@ -515,7 +515,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify right shift on negative value.
    */
-  @Test
+  @Test(timeout = 5000)
   public void leftRightTestNumberByRandomNegative() {
     Random random = new Random();
     String str = generateRandomInteger();
@@ -743,7 +743,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify add digits using fuzzy testing.
    */
-  @Test
+  @Test(timeout = 5000)
   public void addDigitFuzzy() {
     String str = generateRandomBigInteger();
     BigNumber obj = new BigNumberImpl(str);
@@ -1085,7 +1085,7 @@ public class BigNumberImplTest {
   /**
    * A JUnit test case to verify the get position on numbers.
    */
-  @Test
+  @Test(timeout = 5000)
   public void getPositionTestNonEmptyBigNumber() {
     String str = generateRandomBigInteger();
     StringBuilder strbld = new StringBuilder(str);
