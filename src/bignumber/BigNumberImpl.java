@@ -52,9 +52,14 @@ public class BigNumberImpl implements BigNumber {
     }
   }
 
-  @Override
+/*  @Override
   public int length() {
     return head.count();
+  }*/
+
+  @Override
+  public int length() {
+    return head.fold(0, (a, b)->a+b);
   }
 
   @Override
@@ -196,6 +201,7 @@ public class BigNumberImpl implements BigNumber {
    *
    * @return the BigNumber as string
    */
+  @Override
   public String toString() {
     return this.head.toString();
   }

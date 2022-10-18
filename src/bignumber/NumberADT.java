@@ -1,5 +1,7 @@
 package bignumber;
 
+import java.util.function.BiFunction;
+
 /**
  * This interface is an abstract data type and represents the list and the nodes.
  */
@@ -95,4 +97,6 @@ public interface NumberADT {
    * @throws IllegalArgumentException if it is an empty node
    */
   void replace(int value) throws IllegalArgumentException;
+
+  Integer fold(Integer initial, BiFunction<Integer, Integer, Integer> combiner);
 }

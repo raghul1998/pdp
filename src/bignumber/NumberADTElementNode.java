@@ -1,5 +1,7 @@
 package bignumber;
 
+import java.util.function.BiFunction;
+
 /**
  * This is a package private class that represents an element node. This class implements the
  * NumberADT interface. This class has the following variables.
@@ -86,6 +88,11 @@ class NumberADTElementNode implements NumberADT {
   @Override
   public void replace(int value) {
     this.val.replaceValue(value);
+  }
+
+  @Override
+  public Integer fold (Integer initial, BiFunction<Integer, Integer, Integer> combiner) {
+    return combiner.apply(1, this.rest.fold(initial, combiner)) ;
   }
 
 }
