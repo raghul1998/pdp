@@ -52,14 +52,9 @@ public class BigNumberImpl<T> implements BigNumber<T> {
     }
   }
 
-/*  @Override
-  public int length() {
-    return head.count();
-  }*/
-
   @Override
   public int length() {
-    return head.fold(0, ((a, b) -> a + b));
+    return head.fold(1, ((a, b) -> a + b)) - 1;
   }
 
   @Override
@@ -150,14 +145,14 @@ public class BigNumberImpl<T> implements BigNumber<T> {
   }
 
   @Override
-  public T copy() {
-    return (T) new BigNumberImpl(this.toString());
+  public BigNumber<T> copy() {
+    return (BigNumber<T>) new BigNumberImpl(this.toString());
   }
 
   @Override
-  public T add(BigNumber<T> num) {
+  public BigNumber<T> add(BigNumber<T> num) {
     if (num == null || Objects.equals(num.toString(), "0")) {
-      return (T) this;
+      return (BigNumber<T>) this;
     }
     String result;
     if (this.count <= num.length()) {
@@ -165,7 +160,7 @@ public class BigNumberImpl<T> implements BigNumber<T> {
     } else {
       result = sumOfTwoBigNumbers(num.toString(), this.toString());
     }
-    return (T) new BigNumberImpl(result);
+    return new BigNumberImpl<>(result);
   }
 
   @Override

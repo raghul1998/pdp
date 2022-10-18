@@ -62,7 +62,8 @@ class NumberADTEmptyNode<T> implements NumberADT<T> {
     throw new IllegalArgumentException("Invalid Position");
   }
 
-  public Integer fold(Integer initial, BiFunction<Integer, Integer, Integer> combiner) {
+  @Override
+  public <U> U fold(U initial, BiFunction<U, U, U> combiner) {
     return initial;
   }
 

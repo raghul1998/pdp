@@ -58,7 +58,7 @@ public interface BigNumber<T> extends Comparable<T> {
    *
    * @return the copy of the number as a BigNumber object
    */
-  T copy();
+  BigNumber<T> copy();
 
   /**
    * This method takes another BigNumber and returns the sum of these two numbers.
@@ -67,7 +67,7 @@ public interface BigNumber<T> extends Comparable<T> {
    * @param num the other BigNumber which is to be added
    * @return the sum of these two BigNumbers as a BigNumber object
    */
-  T add(BigNumber<T> num);
+  BigNumber<T> add(BigNumber<T> num);
 
   /**
    * This method compares two BigNumbers for ordering. This method overrides the

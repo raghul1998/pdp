@@ -91,8 +91,8 @@ class NumberADTElementNode<T> implements NumberADT<T> {
   }
 
   @Override
-  public Integer fold(Integer initial, BiFunction<Integer, Integer, Integer> combiner) {
-    return combiner.apply( 1, this.rest.fold(initial, combiner));
+  public <U> U fold(U initial, BiFunction<U, U, U> combiner) {
+    return combiner.apply(initial, this.rest.fold(initial, combiner));
   }
 
 }

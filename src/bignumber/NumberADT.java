@@ -98,5 +98,13 @@ public interface NumberADT<T> {
    */
   void replace(int value) throws IllegalArgumentException;
 
-  Integer fold(Integer initial, BiFunction<Integer, Integer, Integer> combiner);
+  /**
+   * A higher order function (fold or reduce) that returns the number of digits.
+   *
+   * @param initial  the initial value from which the count has to begin
+   * @param combiner the combiner function that calculates the length
+   * @param <U>      generic type
+   * @return the length of the number
+   */
+  <U> U fold(U initial, BiFunction<U, U, U> combiner);
 }
