@@ -12,9 +12,9 @@ import java.util.Objects;
  *  <li> count - an integer variable that holds the length of the BigNumber </li>
  * </ul>
  */
-public class BigNumberImpl implements BigNumber {
-  private NumberADT head;
-  private NumberADT tail;
+public class BigNumberImpl<T> implements BigNumber<T> {
+  private NumberADT<T> head;
+  private NumberADT<T> tail;
   private int count;
 
   /**
@@ -22,8 +22,8 @@ public class BigNumberImpl implements BigNumber {
    * that is initialized to 0.
    */
   public BigNumberImpl() {
-    head = tail = new NumberADTEmptyNode();
-    head = tail = tail.addBack(new Number(0), tail);
+    head = tail = new NumberADTEmptyNode<>();
+    head = tail = tail.addBack(new Number(0), (T) tail);
     this.count++;
   }
 
@@ -40,11 +40,11 @@ public class BigNumberImpl implements BigNumber {
     }
 
     if (checkIfStringIsValid(number)) {
-      head = tail = new NumberADTEmptyNode();
-      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(0))), tail);
+      head = tail = new NumberADTEmptyNode<>();
+      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(0))), (T) tail);
       this.count++;
       for (int i = 1; i < number.length(); i++) {
-        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))), tail);
+        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))), (T) tail);
         this.count++;
       }
     } else {
@@ -59,14 +59,14 @@ public class BigNumberImpl implements BigNumber {
 
   @Override
   public int length() {
-    return head.fold(0, (a, b)->a+b);
+    return head.fold(0, ((a, b) -> a + b));
   }
 
   @Override
   public void shiftLeft(int shifts) {
     if ((shifts > 0) && (this.count > 1 || !this.toString().equals("0"))) {
       for (int i = 0; i < shifts; i++) {
-        tail = tail.addBack(new Number(0), tail);
+        tail = tail.addBack(new Number(0), (T) tail);
         this.count++;
       }
     } else if (shifts < 0) {
@@ -78,20 +78,20 @@ public class BigNumberImpl implements BigNumber {
   public void shiftRight(int shifts) {
     if (shifts > 0 && (this.count > 1 || !this.toString().equals("0"))) {
       if (shifts < this.count - 1) {
-        NumberADT temp = head;
+        NumberADT<T> temp = head;
         for (int i = 0; i < this.count - shifts - 1; i++) {
           temp = temp.next();
         }
         tail = temp;
-        tail.setNext(new NumberADTEmptyNode());
+        tail.setNext((T) new NumberADTEmptyNode());
         this.count = this.count - shifts;
       } else if (shifts + 1 == this.count) {
         tail = head;
-        tail.setNext(new NumberADTEmptyNode());
+        tail.setNext((T) new NumberADTEmptyNode());
         this.count = 1;
       } else {
-        head = tail = new NumberADTEmptyNode();
-        head = tail = tail.addBack(new Number(0), tail);
+        head = tail = new NumberADTEmptyNode<>();
+        head = tail = tail.addBack(new Number(0), (T) tail);
         this.count = 1;
       }
 
@@ -106,7 +106,7 @@ public class BigNumberImpl implements BigNumber {
       throw new IllegalArgumentException("Digit should be a single non-negative value");
     }
     if (digit != 0) {
-      NumberADT temp = tail;
+      NumberADT<T> temp = tail;
       int value;
       int result;
       int reminder;
@@ -132,7 +132,7 @@ public class BigNumberImpl implements BigNumber {
       }
 
       if (carry) {
-        head = head.addFront(new Number(1), head);
+        head = head.addFront(new Number(1), (T) head);
         this.count++;
       }
     }
@@ -150,14 +150,14 @@ public class BigNumberImpl implements BigNumber {
   }
 
   @Override
-  public BigNumber copy() {
-    return new BigNumberImpl(this.toString());
+  public T copy() {
+    return (T) new BigNumberImpl(this.toString());
   }
 
   @Override
-  public BigNumber add(BigNumber num) {
+  public T add(BigNumber<T> num) {
     if (num == null || Objects.equals(num.toString(), "0")) {
-      return this;
+      return (T) this;
     }
     String result;
     if (this.count <= num.length()) {
@@ -165,11 +165,11 @@ public class BigNumberImpl implements BigNumber {
     } else {
       result = sumOfTwoBigNumbers(num.toString(), this.toString());
     }
-    return new BigNumberImpl(result);
+    return (T) new BigNumberImpl(result);
   }
 
   @Override
-  public int compareTo(BigNumber obj) {
+  public int compareTo(T obj) {
     if (this == obj) {
       return 0;
     }

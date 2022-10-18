@@ -765,7 +765,7 @@ public class BigNumberImplTest {
   public void addTest() {
     BigNumber one = new BigNumberImpl("123456");
     BigNumber two = new BigNumberImpl("999999999");
-    BigNumber result = one.add(two);
+    BigNumber result = (BigNumber) one.add(two);
     assertEquals("123456", one.toString());
     assertEquals("999999999", two.toString());
     assertEquals("1000123455", result.toString());
@@ -780,7 +780,7 @@ public class BigNumberImplTest {
     BigNumber obj2 = new BigNumberImpl();
     BigNumber obj3;
 
-    obj3 = obj1.add(obj2);
+    obj3 = (BigNumber) obj1.add(obj2);
     assertEquals("0", obj3.toString());
     assertEquals(1, obj3.length());
 
@@ -790,7 +790,7 @@ public class BigNumberImplTest {
     assertEquals("0", obj2.toString());
     assertEquals(1, obj2.length());
 
-    obj3 = obj2.add(obj1);
+    obj3 = (BigNumber) obj2.add(obj1);
     assertEquals("0", obj3.toString());
     assertEquals(1, obj3.length());
 
@@ -810,7 +810,7 @@ public class BigNumberImplTest {
     BigNumber obj2 = new BigNumberImpl("0");
     BigNumber obj3;
 
-    obj3 = obj1.add(obj2);
+    obj3 = (BigNumber) obj1.add(obj2);
     assertEquals("0", obj3.toString());
     assertEquals(1, obj3.length());
 
@@ -820,7 +820,7 @@ public class BigNumberImplTest {
     assertEquals("0", obj2.toString());
     assertEquals(1, obj2.length());
 
-    obj3 = obj2.add(obj1);
+    obj3 = (BigNumber) obj2.add(obj1);
     assertEquals("0", obj3.toString());
     assertEquals(1, obj3.length());
 
@@ -840,7 +840,7 @@ public class BigNumberImplTest {
     BigNumber obj2 = new BigNumberImpl("0");
     BigNumber obj3;
 
-    obj3 = obj1.add(obj2);
+    obj3 = (BigNumber) obj1.add(obj2);
     assertEquals("0", obj3.toString());
     assertEquals(1, obj3.length());
 
@@ -850,7 +850,7 @@ public class BigNumberImplTest {
     assertEquals("0", obj2.toString());
     assertEquals(1, obj2.length());
 
-    obj3 = obj2.add(obj1);
+    obj3 = (BigNumber) obj2.add(obj1);
     assertEquals("0", obj3.toString());
     assertEquals(1, obj3.length());
 
@@ -870,7 +870,7 @@ public class BigNumberImplTest {
     BigNumber obj2 = new BigNumberImpl("12345");
     BigNumber obj3;
 
-    obj3 = obj1.add(obj2);
+    obj3 = (BigNumber) obj1.add(obj2);
     assertEquals("12345", obj3.toString());
     assertEquals(5, obj3.length());
 
@@ -880,7 +880,7 @@ public class BigNumberImplTest {
     assertEquals("12345", obj2.toString());
     assertEquals(5, obj2.length());
 
-    obj3 = obj2.add(obj1);
+    obj3 = (BigNumber) obj2.add(obj1);
     assertEquals("12345", obj3.toString());
     assertEquals(5, obj3.length());
 
@@ -900,7 +900,7 @@ public class BigNumberImplTest {
     BigNumber obj2 = new BigNumberImpl("12345");
     BigNumber obj3;
 
-    obj3 = obj1.add(obj2);
+    obj3 = (BigNumber) obj1.add(obj2);
     assertEquals("12345", obj3.toString());
     assertEquals(5, obj3.length());
 
@@ -910,7 +910,7 @@ public class BigNumberImplTest {
     assertEquals("12345", obj2.toString());
     assertEquals(5, obj2.length());
 
-    obj3 = obj2.add(obj1);
+    obj3 = (BigNumber) obj2.add(obj1);
     assertEquals("12345", obj3.toString());
     assertEquals(5, obj3.length());
 
@@ -930,7 +930,7 @@ public class BigNumberImplTest {
     BigNumber obj2 = new BigNumberImpl("12345");
     BigNumber obj3;
 
-    obj3 = obj1.add(obj2);
+    obj3 = (BigNumber) obj1.add(obj2);
     assertEquals("12468", obj3.toString());
     assertEquals(5, obj3.length());
 
@@ -940,7 +940,7 @@ public class BigNumberImplTest {
     assertEquals("12345", obj2.toString());
     assertEquals(5, obj2.length());
 
-    obj3 = obj2.add(obj1);
+    obj3 = (BigNumber) obj2.add(obj1);
     assertEquals("12468", obj3.toString());
     assertEquals(5, obj3.length());
 
@@ -970,7 +970,7 @@ public class BigNumberImplTest {
         sum = sumOfTwoBigNumbers(str2, str1);
       }
 
-      obj3 = obj1.add(obj2);
+      obj3 = (BigNumber) obj1.add(obj2);
       assertEquals(sum, obj3.toString());
       assertEquals(sum.length(), obj3.length());
 
@@ -980,7 +980,7 @@ public class BigNumberImplTest {
       assertEquals(str2, obj2.toString());
       assertEquals(str2.length(), obj2.length());
 
-      obj3 = obj2.add(obj1);
+      obj3 = (BigNumber) obj2.add(obj1);
       assertEquals(sum, obj3.toString());
       assertEquals(sum.length(), obj3.length());
 
@@ -1109,7 +1109,7 @@ public class BigNumberImplTest {
    */
   @Test
   public void copyTest() {
-    BigNumber copy = obj2.copy();
+    BigNumber copy = (BigNumber) obj2.copy();
     copy.shiftLeft(2);
     assertEquals("12300", copy.toString());
     assertEquals("123", obj2.toString());
@@ -1121,7 +1121,7 @@ public class BigNumberImplTest {
   @Test
   public void copyTestEmpty() {
     BigNumber obj = new BigNumberImpl();
-    BigNumber copy = obj.copy();
+    BigNumber copy = (BigNumber) obj.copy();
 
     assertEquals("0", copy.toString());
     assertEquals(1, copy.length());
@@ -1186,7 +1186,7 @@ public class BigNumberImplTest {
   @Test
   public void copyTestEmpty2() {
     BigNumber obj = new BigNumberImpl("0");
-    BigNumber copy = obj.copy();
+    BigNumber copy = (BigNumber) obj.copy();
 
     assertEquals("0", copy.toString());
     assertEquals(1, copy.length());
@@ -1251,7 +1251,7 @@ public class BigNumberImplTest {
   @Test
   public void copyTestEmpty3() {
     BigNumber obj = new BigNumberImpl("1234567890");
-    BigNumber copy = obj.copy();
+    BigNumber copy = (BigNumber) obj.copy();
 
     assertEquals("1234567890", copy.toString());
     assertEquals(10, obj.length());

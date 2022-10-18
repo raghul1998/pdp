@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 /**
  * This interface is an abstract data type and represents the list and the nodes.
  */
-public interface NumberADT {
+public interface NumberADT<T> {
   /**
    * This method helps to get the number of nodes in the list.
    * This basically tells the length of the list.
@@ -22,7 +22,7 @@ public interface NumberADT {
    * @param prev represents the previous node
    * @return the new node
    */
-  NumberADT addBack(Number num, NumberADT prev);
+  NumberADT<T> addBack(Number num, T prev);
 
   /**
    * Adds a node at the front of the list.
@@ -32,7 +32,7 @@ public interface NumberADT {
    * @param next represents the next node
    * @return the new node
    */
-  NumberADT addFront(Number num, NumberADT next);
+  NumberADT<T> addFront(Number num, T next);
 
   /**
    * Overrides the toString method and returns the string representation of the node.
@@ -64,14 +64,14 @@ public interface NumberADT {
    *
    * @return the previous node as NumberADT object
    */
-  NumberADT prev();
+  NumberADT<T> prev();
 
   /**
    * This method helps to get the next node of the given node.
    *
    * @return the next node as NumberADT object
    */
-  NumberADT next();
+  NumberADT<T> next();
 
   /**
    * This method set the given node to the next of this node.
@@ -80,7 +80,7 @@ public interface NumberADT {
    * @param node node to be set as next of this node
    * @throws IllegalArgumentException if it is an empty node
    */
-  void setNext(NumberADT node) throws IllegalArgumentException;
+  void setNext(T node) throws IllegalArgumentException;
 
   /**
    * A method helps to get the integer value of the node.

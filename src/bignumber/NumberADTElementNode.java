@@ -11,10 +11,10 @@ import java.util.function.BiFunction;
  *   <li> rest - next node of this node </li>
  * </ul>
  */
-class NumberADTElementNode implements NumberADT {
+class NumberADTElementNode<T> implements NumberADT<T> {
   private final Number val;
-  private NumberADT prev;
-  private NumberADT rest;
+  private NumberADT<T> prev;
+  private NumberADT<T> rest;
 
   /**
    * Constructs a new element node with the given value and set its previous and next node.
@@ -23,7 +23,7 @@ class NumberADTElementNode implements NumberADT {
    * @param prev previous to this new node
    * @param rest rest of this new node
    */
-  public NumberADTElementNode(Number num, NumberADT prev, NumberADT rest) {
+  public NumberADTElementNode(Number num, NumberADT<T> prev, NumberADT<T> rest) {
     this.val = num;
     this.prev = prev;
     this.rest = rest;
@@ -35,13 +35,13 @@ class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public NumberADT addBack(Number num, NumberADT prev) {
+  public NumberADT<T> addBack(Number num, T prev) {
     this.rest = this.rest.addBack(num, prev);
     return this.rest;
   }
 
   @Override
-  public NumberADT addFront(Number num, NumberADT next) {
+  public NumberADT<T> addFront(Number num, T next) {
     this.prev = this.prev.addFront(num, next);
     return this.prev;
   }
@@ -66,18 +66,18 @@ class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public NumberADT next() {
+  public NumberADT<T> next() {
     return this.rest;
   }
 
   @Override
-  public NumberADT prev() {
+  public NumberADT<T> prev() {
     return this.prev;
   }
 
   @Override
-  public void setNext(NumberADT node) {
-    this.rest = node;
+  public void setNext(T node) {
+    this.rest = (NumberADT<T>) node;
   }
 
   @Override
@@ -91,8 +91,8 @@ class NumberADTElementNode implements NumberADT {
   }
 
   @Override
-  public Integer fold (Integer initial, BiFunction<Integer, Integer, Integer> combiner) {
-    return combiner.apply(1, this.rest.fold(initial, combiner)) ;
+  public Integer fold(Integer initial, BiFunction<Integer, Integer, Integer> combiner) {
+    return combiner.apply( 1, this.rest.fold(initial, combiner));
   }
 
 }

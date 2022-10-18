@@ -4,7 +4,7 @@ package bignumber;
  * This interface represents a BigNumber and a set of operations that can be performed
  * on the BigNumber.
  */
-public interface BigNumber extends Comparable<BigNumber> {
+public interface BigNumber<T> extends Comparable<T> {
   /**
    * This method length that returns the number of digits in this number.
    * This method basically helps to find the length of the big number.
@@ -58,7 +58,7 @@ public interface BigNumber extends Comparable<BigNumber> {
    *
    * @return the copy of the number as a BigNumber object
    */
-  BigNumber copy();
+  T copy();
 
   /**
    * This method takes another BigNumber and returns the sum of these two numbers.
@@ -67,7 +67,7 @@ public interface BigNumber extends Comparable<BigNumber> {
    * @param num the other BigNumber which is to be added
    * @return the sum of these two BigNumbers as a BigNumber object
    */
-  BigNumber add(BigNumber num);
+  T add(BigNumber<T> num);
 
   /**
    * This method compares two BigNumbers for ordering. This method overrides the
@@ -77,6 +77,6 @@ public interface BigNumber extends Comparable<BigNumber> {
    * @return 0 if both big numbers are same, else returns a positive number if this object is
    *         greater, else returns a negative number if this object is smaller
    */
-  int compareTo(BigNumber num);
+  int compareTo(T num);
 
 }

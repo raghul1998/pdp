@@ -6,20 +6,20 @@ import java.util.function.BiFunction;
  * This is a package private class that represents an empty node. This class implements the
  * NumberADT interface.
  */
-class NumberADTEmptyNode implements NumberADT {
+class NumberADTEmptyNode<T> implements NumberADT<T> {
   @Override
   public int count() {
     return 0;
   }
 
   @Override
-  public NumberADT addBack(Number num, NumberADT prev) {
-    return new NumberADTElementNode(num, prev, this);
+  public NumberADT<T> addBack(Number num, T prev) {
+    return new NumberADTElementNode<T>(num, (NumberADT<T>) prev, this);
   }
 
   @Override
-  public NumberADT addFront(Number num, NumberADT next) {
-    return new NumberADTElementNode(num, this, next);
+  public NumberADT<T> addFront(Number num, T next) {
+    return new NumberADTElementNode<T>(num, this, (NumberADT<T>) next);
   }
 
   @Override
@@ -38,17 +38,17 @@ class NumberADTEmptyNode implements NumberADT {
   }
 
   @Override
-  public NumberADT next() {
+  public NumberADT<T> next() {
     return null;
   }
 
   @Override
-  public NumberADT prev() {
+  public NumberADT<T> prev() {
     return null;
   }
 
   @Override
-  public void setNext(NumberADT node) {
+  public void setNext(T node) {
     throw new IllegalArgumentException("Invalid Position");
   }
 
@@ -62,7 +62,6 @@ class NumberADTEmptyNode implements NumberADT {
     throw new IllegalArgumentException("Invalid Position");
   }
 
-  @Override
   public Integer fold(Integer initial, BiFunction<Integer, Integer, Integer> combiner) {
     return initial;
   }
