@@ -89,7 +89,6 @@ public class BigNumberImpl<T> implements BigNumber<T> {
         head = tail = tail.addBack(new Number(0), (T) tail);
         this.count = 1;
       }
-
     } else if (shifts < 0) {
       shiftLeft(shifts * -1);
     }
@@ -107,7 +106,7 @@ public class BigNumberImpl<T> implements BigNumber<T> {
       int reminder;
       boolean carry = false;
 
-      while (!Objects.equals(temp, new NumberADTEmptyNode())) {
+      while (!Objects.equals(temp, new NumberADTEmptyNode<>())) {
         value = temp.getValue();
         if (!carry) {
           result = value + digit;
@@ -146,13 +145,13 @@ public class BigNumberImpl<T> implements BigNumber<T> {
 
   @Override
   public BigNumber<T> copy() {
-    return (BigNumber<T>) new BigNumberImpl(this.toString());
+    return new BigNumberImpl<>(this.toString());
   }
 
   @Override
   public BigNumber<T> add(BigNumber<T> num) {
     if (num == null || Objects.equals(num.toString(), "0")) {
-      return (BigNumber<T>) this;
+      return this;
     }
     String result;
     if (this.count <= num.length()) {
@@ -218,8 +217,7 @@ public class BigNumberImpl<T> implements BigNumber<T> {
       return false;
     }
 
-    BigNumber num = (BigNumber) obj;
-    return Objects.equals(this.toString(), num.toString());
+    return Objects.equals(this.toString(), obj.toString());
   }
 
   /**
