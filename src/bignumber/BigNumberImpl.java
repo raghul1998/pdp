@@ -41,10 +41,29 @@ public class BigNumberImpl<T> implements BigNumber<T> {
 
     if (checkIfStringIsValid(number)) {
       head = tail = new NumberADTEmptyNode<>();
-      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(0))), (T) tail);
+      int index;
+      boolean isFirstDigitValid = false;
+      for (index = 0; index < number.length(); index++) {
+        if (number.charAt(index) != '0') {
+          isFirstDigitValid = true;
+          break;
+        }
+      }
+
+      if (!isFirstDigitValid) {
+        head = tail = new NumberADTEmptyNode<>();
+        head = tail = tail.addBack(new Number(0), (T) tail);
+        this.count++;
+        return;
+      }
+
+      head = tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(index))),
+              (T) tail);
       this.count++;
-      for (int i = 1; i < number.length(); i++) {
-        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))), (T) tail);
+
+      for (int i = index + 1; i < number.length(); i++) {
+        tail = tail.addBack(new Number(Character.getNumericValue(number.charAt(i))),
+                (T) tail);
         this.count++;
       }
     } else {

@@ -1595,6 +1595,21 @@ public class BigNumberImplTest {
   }
 
   /**
+   * A JUnit test to test the leading 0's in a string.
+   */
+  @Test
+  public void testStringWithZeros() {
+    BigNumber obj1 = new BigNumberImpl("00000");
+    BigNumber obj2 = new BigNumberImpl("0000000123456000");
+
+    assertEquals(1, obj1.length());
+    assertEquals(9, obj2.length());
+
+    assertEquals("0", obj1.toString());
+    assertEquals("123456000", obj2.toString());
+  }
+
+  /**
    * A helper function to generate a random number.
    *
    * @return the random integer as a string
